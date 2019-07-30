@@ -41,7 +41,7 @@
 </head>
 
 
-<body class="main-center theme-blue" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -70,7 +70,7 @@
   <div class="ins-search-mask"></div>
   <div class="ins-search-container">
     <div class="ins-input-wrapper">
-      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
       <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
     </div>
     <div class="ins-section-wrapper">
@@ -132,36 +132,6 @@
         </li>
         
         
-        <li class="menu-item menu-item-repository">
-          <a href="/repository">
-            
-            <i class="icon icon-project"></i>
-            
-            <span class="menu-title">项目</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-books">
-          <a href="/books">
-            
-            <i class="icon icon-book-fill"></i>
-            
-            <span class="menu-title">书单</span>
-          </a>
-        </li>
-        
-        
-        <li class="menu-item menu-item-links">
-          <a href="/links">
-            
-            <i class="icon icon-friendship"></i>
-            
-            <span class="menu-title">友链</span>
-          </a>
-        </li>
-        
-        
         <li class="menu-item menu-item-about">
           <a href="/about">
             
@@ -176,9 +146,15 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
         
-        <li><a href="https://weibo.com/206090953" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
         
     </ul>
 
@@ -195,7 +171,7 @@
     <div class="widget-body">
         <div id="board">
             <div class="content">
-                <p>终于等到你</p>
+                <p>萧爷代码实验室 重装上阵</p>
             </div>
         </div>
     </div>
@@ -233,7 +209,7 @@
                 
               </p>
               <p class="item-title">
-                <a href="/2019/07/30/hello-world/" class="title">Hello World</a>
+                <a href="/2019/07/30/hello-world/" class="title">Flutter App 软件测试指南</a>
               </p>
               <p class="item-date">
                 <time datetime="2019-07-30T04:08:00.440Z" itemprop="datePublished">2019-07-30</time>
@@ -262,7 +238,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/30/hello-world/">Hello World</a>
+      <a class="article-title" href="/2019/07/30/hello-world/">Flutter App 软件测试指南</a>
     </h1>
   
 
@@ -285,19 +261,154 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在实际开发中，测试和调试所占的时间比例，在总开发时间中还是比较高的。某些Bug隐藏之深是开发者通常想不到的，手动测试的难度也会随之加剧，甚至会有遗漏的情况出现。因此，自动化测试工具便因运而生，它可以帮助开发者或测试员在产品发布前确保产品的质量。<br>随着应用的功能越多，手动测试的难度就越大。一套完整的自动化测试将帮助您，并确保您的应用在发布之前正确执行。<br>本文涵盖了 Flutter App 的所有测试方式，通过本场 Chat 的学习，您将会得到以下知识：   </p>
+<ol>
+<li>Flutter App 中的三种测试方式及优劣分析；  </li>
+<li>如何在 Flutter App 中进行单元测试；  </li>
+<li>如何在 Flutter App 中进行组件测试；  </li>
+<li>如何在 Flutter App 中进行集成测试。  </li>
+</ol>
+<p>Flutter框架提供了三种自动化测试方法：单元测试、组件测试和集成测试。在讲述以上三种测试方式之前，我们首先来看一下上述三种测试方式的优劣势，以及适用场景。</p>
+<h2 id="Flutter-App-中的三种测试方式及优劣分析"><a href="#Flutter-App-中的三种测试方式及优劣分析" class="headerlink" title="Flutter App 中的三种测试方式及优劣分析"></a>Flutter App 中的三种测试方式及优劣分析</h2><p>首先我们来看三种测试方式的能力：   </p>
+<ul>
+<li>单元测试：测试单个功能、单个方法或单个类，不会有文件IO，不会有UI显示，也不会接收用户操作；    </li>
+<li>组件测试：测试单个组件，当某个组件涉及多个类或存在不同的状态时，关联部分也会被测试，会有UI显示，可能会接收用户操作；    </li>
+<li>集成测试：测试App的整体或大部分。    </li>
+</ul>
+<p>因此，单元测试通常在用于验证某个逻辑单元的正确性，由于其不具有UI显示和用户输入操作，所以一般情况下，进行单元测试并不需要真机或模拟器；<br>组件测试稍微复杂一点点，它可能涉及多个类或多个子组件，同时还需要提供适当的上下文才行。它通常用于测试某个组件具有正确的显示和用户交互；<br>集成测试通常需要真机或者模拟器，它的目的是验证整个App的运行正确，所有Widgets的组合准确无误。   </p>
+<p>下面的表格向我们展示了三种测试方式在不同方面的优劣特点：    </p>
+<table>
+<thead>
+<tr>
+<th>考量标准</th>
+<th>单元测试</th>
+<th>组件测试</th>
+<th>集成测试</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>信赖度</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>维护成本</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>依赖性</td>
+<td>低</td>
+<td>中</td>
+<td>高</td>
+</tr>
+<tr>
+<td>执行速度</td>
+<td>快速</td>
+<td>稍慢</td>
+<td>最慢</td>
+</tr>
+</tbody></table>
+<p>接下来我们分别看一下各种测试方式是如何进行的。  </p>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>完整地进行一次单元测试总共有五个步骤，我们逐步进行：</p>
+<h3 id="添加测试库"><a href="#添加测试库" class="headerlink" title="添加测试库"></a>添加测试库</h3><p>默认情况下，用于测试的库在新建Flutter工程的时候已经引入了，它位于pubspec.yaml中，打开后可以找到相关代码：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dev_dependencies:</span><br><span class="line">  flutter_test:</span><br><span class="line">    sdk: flutter</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>但是，如果工程代码没有引入这个库，请按照如上所示将其添加到pubspec.yaml文件中。    </p>
+<h3 id="创建测试类和被测试类"><a href="#创建测试类和被测试类" class="headerlink" title="创建测试类和被测试类"></a>创建测试类和被测试类</h3><p>顾名思义，测试类是用来测试另一个类的，被测试类是等待另一个类来测试。<br>还记得上一次课中，我们回顾的Flutter App工程结构吗？在工程根目录下，包含test目录。通常，该目录就是用来放测试类的。App的业务逻辑代码则位于lib目录中。<br>下面分别在这两个目录中创建dart文件：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">counter_app/</span><br><span class="line">  lib/</span><br><span class="line">    counter.dart</span><br><span class="line">  test/</span><br><span class="line">    counter_test.dart</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>像上述树形结构显示的那样，我们在lib目录中新建了counter.dart类，在test目录中新建了counter_test.dart类。前者是被测试类，后者是测试类。    </p>
+<h3 id="开发业务逻辑"><a href="#开发业务逻辑" class="headerlink" title="开发业务逻辑"></a>开发业务逻辑</h3><p>接下来就是开发业务逻辑了。<br>本例中，我们尝试实现一个简单的变量自增和自减两个方法，这部分的实现在lib目录下的counter.dart中。<br>代码如下：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">class Counter &#123;</span><br><span class="line">  int value = 0;</span><br><span class="line">  void increment() =&gt; value++;</span><br><span class="line">  void decrement() =&gt; value--;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="开发测试类"><a href="#开发测试类" class="headerlink" title="开发测试类"></a>开发测试类</h3><p>下面我们编写counter_test.dart类，这里需要导入test.dart类，以便可以正常使用测试方法。下面是测试counter.dart类中，自增和自减方法正确性的代码：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter_test/flutter_test.dart&apos;;</span><br><span class="line">import &apos;package:demo_unit_test/counter.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line"></span><br><span class="line">  test(&apos;Counter value should be incremented&apos;, () &#123;</span><br><span class="line">    final counter = Counter();</span><br><span class="line"></span><br><span class="line">    counter.increment();</span><br><span class="line"></span><br><span class="line">    expect(counter.value, 1);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  test(&apos;value should be decremented&apos;, () &#123;</span><br><span class="line">      final counter = Counter();</span><br><span class="line"></span><br><span class="line">      counter.decrement();</span><br><span class="line"></span><br><span class="line">      expect(counter.value, -1);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<p>怎么样？这段代码理解起来还不难吧？<br>要注意的是，这里的测试内容十分简单。当要测试的单元过多时，我们可以将其归类。归类的依据可以按照功能来做，比如上例中，加减法都属于算术方法，因此可以归为同一类。<br>使用group方法可实现归类效果，具体实现如下：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter_test/flutter_test.dart&apos;;</span><br><span class="line">import &apos;package:demo_unit_test/counter.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">  group(&apos;Counter&apos;, () &#123;</span><br><span class="line">    test(&apos;value should start at 0&apos;, () &#123;</span><br><span class="line">      expect(Counter().value, 0);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    test(&apos;value should be incremented&apos;, () &#123;</span><br><span class="line">      final counter = Counter();</span><br><span class="line"></span><br><span class="line">      counter.increment();</span><br><span class="line"></span><br><span class="line">      expect(counter.value, 1);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    test(&apos;value should be decremented&apos;, () &#123;</span><br><span class="line">      final counter = Counter();</span><br><span class="line"></span><br><span class="line">      counter.decrement();</span><br><span class="line"></span><br><span class="line">      expect(counter.value, -1);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>虽然看上去代码量增多了，但结构更加清晰了，阅读起来更加容易了。我们还可以使用IDE的折叠代码功能，将同类型的测试代码进行折叠，就更易读了。     </p>
+<h3 id="运行测试类"><a href="#运行测试类" class="headerlink" title="运行测试类"></a>运行测试类</h3><p>最后，我们运行测试类开始测试。<br>打开Android Studio中的Terminal视图，运行集成的控制台，在其中输入一下命令：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter test test/counter_test.dart</span><br></pre></td></tr></table></figure>
+
+<p>然后回车，稍等片刻，即可得到测试结果：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00:02 +2: All tests passed!</span><br></pre></td></tr></table></figure>
+
+<p>测试通过！<br>当多个测试类存在时，如果我们想要执行所有的测试内容，直接不指定测试类即可：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter test</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件测试"><a href="#组件测试" class="headerlink" title="组件测试"></a>组件测试</h2><p>完整的组件测试可分为八个步骤进行，这种类型的测试需要使用真机或模拟器。<br>和单元测试一样，我们逐步进行讲解。     </p>
+<h3 id="添加测试库-1"><a href="#添加测试库-1" class="headerlink" title="添加测试库"></a>添加测试库</h3><p>运行组件测试依然需要添加测试库：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dev_dependencies:</span><br><span class="line">  flutter_test:</span><br><span class="line">    sdk: flutter</span><br></pre></td></tr></table></figure>
+
+<p>这一步就不多说了。</p>
+<h3 id="创建要被测试的组件"><a href="#创建要被测试的组件" class="headerlink" title="创建要被测试的组件"></a>创建要被测试的组件</h3><p>这一次，我们以新建的计数器应用为例，默认的widget_test.dart中其实已经包含了组件测试的方法。，我们一起来看一下。    </p>
+<h3 id="创建组件测试类"><a href="#创建组件测试类" class="headerlink" title="创建组件测试类"></a>创建组件测试类</h3><p>由于这一次采用了默认新建的工程作为示例，因此我们省略了开发业务逻辑代码的过程，直接来到测试类的编写。<br>打开test目录下的widget_test.dart，阅读里面的代码，不难发现，用于组件测试的结构是这样的：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void main() &#123;</span><br><span class="line">  testWidgets(&apos;MyWidget has a title and message&apos;, (WidgetTester tester) async &#123;</span><br><span class="line">    // 测试代码</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>没错，我们用testWidgets()方法进行组件测试，它包含了WidgetTester对象——tester，我们将在下一步用到该对象。   </p>
+<h3 id="使用WidgetTester创建组件"><a href="#使用WidgetTester创建组件" class="headerlink" title="使用WidgetTester创建组件"></a>使用WidgetTester创建组件</h3><p>继续阅读widget_test.dart代码，在testWidgets()方法中，一上来执行了以下语句：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">await tester.pumpWidget(MyApp());</span><br></pre></td></tr></table></figure>
+
+<p>pumpWidget方法创建了MyApp组件，这一步骤并没有在你的移动设备上运行，只是在后台默默地完成组件的渲染。<br>继续阅读后面的代码，我们还发现了tester.tap()，该方法模拟一个点击操作；紧跟其后的tester.pump()则会重建组件（对应业务逻辑代码中的setState()方法），因为单纯的点击后，并不会使有状态组件发生最终显示变化，只有调用tester.pump()之后才行。通常，被测试的代码中有setState()的地方，就会有tester.pump()出现在测试代码中。   </p>
+<h3 id="使用find找到被测组件"><a href="#使用find找到被测组件" class="headerlink" title="使用find找到被测组件"></a>使用find找到被测组件</h3><p>在widget_test.dart中，还有类似这样的写法：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find.text(&apos;0&apos;)</span><br><span class="line">find.byIcon(Icons.add)</span><br></pre></td></tr></table></figure>
+
+<p>使用find，可以帮我们找到要验证的组件。<br>比如，上面的代码中，前者是通过“包含0”，去寻找符合该要求的组件。<br>我们都知道，默认创建的工程，直接运行就会显示一个点按FloatingActionButton的计数器，默认值为0。<br>显而易见地，符合包含0条件的，只有屏幕中央的计数器值。而后者则是通过加号条件来找到右下角的FloatingActionButton。    </p>
+<h3 id="使用Matcher验证结果"><a href="#使用Matcher验证结果" class="headerlink" title="使用Matcher验证结果"></a>使用Matcher验证结果</h3><p>找到组件并模拟点击事件后，我们就要验证最终的结果了，在Widget_test.dart中，将查找组件和验证结果写到了一起。代码如下所示：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expect(find.text(&apos;0&apos;), findsOneWidget);</span><br><span class="line">expect(find.text(&apos;1&apos;), findsNothing);</span><br></pre></td></tr></table></figure>
+
+<p>这段代码很容易理解，通过查找包含0的条件，若符合找到一个组件的结果，则表示测试通过。   </p>
+<h3 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h3><p>运行组件测试的方法和运行单元测试相同。    </p>
+<p>最后，让我们回顾整个widget_test.dart：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter/material.dart&apos;;</span><br><span class="line">import &apos;package:flutter_test/flutter_test.dart&apos;;</span><br><span class="line"></span><br><span class="line">import &apos;package:demo_widget_test/main.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">  testWidgets(&apos;Counter increments smoke test&apos;, (WidgetTester tester) async &#123;</span><br><span class="line">    // Build our app and trigger a frame.</span><br><span class="line">    await tester.pumpWidget(MyApp());</span><br><span class="line"></span><br><span class="line">    // Verify that our counter starts at 0.</span><br><span class="line">    expect(find.text(&apos;0&apos;), findsOneWidget);</span><br><span class="line">    expect(find.text(&apos;1&apos;), findsNothing);</span><br><span class="line"></span><br><span class="line">    // Tap the &apos;+&apos; icon and trigger a frame.</span><br><span class="line">    await tester.tap(find.byIcon(Icons.add));</span><br><span class="line">    await tester.pump();</span><br><span class="line"></span><br><span class="line">    // Verify that our counter has incremented.</span><br><span class="line">    expect(find.text(&apos;0&apos;), findsNothing);</span><br><span class="line">    expect(find.text(&apos;1&apos;), findsOneWidget);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>梳理一下整个组件测试流程：    </p>
+<ol>
+<li>创建MyApp组件；   </li>
+<li>查找符合“包含0”条件的组件，期望结果是1个；   </li>
+<li>查找符合“包含1”条件的组件，期望结果是0个；   </li>
+<li>点击包含加号图标的组件；   </li>
+<li>重建组件；   </li>
+<li>查找符合“包含0”条件的组件，期望结果是0个；   </li>
+<li>查找符合“包含1”条件的组件，期望结果是1个；   </li>
+<li>运行测试，检查测试结果。    </li>
+</ol>
+<h2 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h2><p>说过了单元测试和组件测试，我们下面来聊聊集成测试。<br>我们可以分6个步骤进行集成测试，这一节我们依旧使用新建的默认工程为例。   </p>
+<h3 id="创建要测试的App"><a href="#创建要测试的App" class="headerlink" title="创建要测试的App"></a>创建要测试的App</h3><p>虽说我们直接使用新建的默认工程，但为了完成集成测试，还需要在原有的代码基础上做点小改动——在计数值显示的Text组件和FloatingActionButton组件上添加key属性。<br>完整的main.dart代码如下：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter/material.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() =&gt; runApp(MyApp());</span><br><span class="line"></span><br><span class="line">class MyApp extends StatelessWidget &#123;</span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return MaterialApp(</span><br><span class="line">      title: &apos;Flutter Demo&apos;,</span><br><span class="line">      theme: ThemeData(</span><br><span class="line">        primarySwatch: Colors.blue,</span><br><span class="line">      ),</span><br><span class="line">      home: MyHomePage(title: &apos;Flutter Demo Home Page&apos;),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class MyHomePage extends StatefulWidget &#123;</span><br><span class="line">  MyHomePage(&#123;Key key, this.title&#125;) : super(key: key);</span><br><span class="line"></span><br><span class="line">  final String title;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  _MyHomePageState createState() =&gt; _MyHomePageState();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class _MyHomePageState extends State&lt;MyHomePage&gt; &#123;</span><br><span class="line">  int _counter = 0;</span><br><span class="line"></span><br><span class="line">  void _incrementCounter() &#123;</span><br><span class="line">    setState(() &#123;</span><br><span class="line">      _counter++;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @override</span><br><span class="line">  Widget build(BuildContext context) &#123;</span><br><span class="line">    return Scaffold(</span><br><span class="line">      appBar: AppBar(</span><br><span class="line">        title: Text(widget.title),</span><br><span class="line">      ),</span><br><span class="line">      body: Center(</span><br><span class="line">        child: Column(</span><br><span class="line">          mainAxisAlignment: MainAxisAlignment.center,</span><br><span class="line">          children: &lt;Widget&gt;[</span><br><span class="line">            Text(</span><br><span class="line">              &apos;You have pushed the button this many times:&apos;,</span><br><span class="line">            ),</span><br><span class="line">            Text(</span><br><span class="line">              &apos;$_counter&apos;,</span><br><span class="line">              key: Key(&apos;counter&apos;),</span><br><span class="line">              style: Theme.of(context).textTheme.display1,</span><br><span class="line">            ),</span><br><span class="line">          ],</span><br><span class="line">        ),</span><br><span class="line">      ),</span><br><span class="line">      floatingActionButton: FloatingActionButton(</span><br><span class="line">        key: Key(&apos;increment&apos;),</span><br><span class="line">        onPressed: _incrementCounter,</span><br><span class="line">        tooltip: &apos;Increment&apos;,</span><br><span class="line">        child: Icon(Icons.add),</span><br><span class="line">      ),</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：上述代码精简了原代码中的注释部分。     </p>
+<h3 id="添加必要的测试库"><a href="#添加必要的测试库" class="headerlink" title="添加必要的测试库"></a>添加必要的测试库</h3><p>进行集成测试，需要使用flutter_driver库。和flutter_test库类似，将其添加到pubspec.yaml的dev_dependencies节点下即可。    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dev_dependencies:</span><br><span class="line">  flutter_test:</span><br><span class="line">    sdk: flutter</span><br><span class="line">  flutter_driver:</span><br><span class="line">    sdk: flutter</span><br><span class="line">  test: any</span><br></pre></td></tr></table></figure>
+
+<p>当然，不要忘记声明flutter_test库。    </p>
+<h3 id="创建测试类"><a href="#创建测试类" class="headerlink" title="创建测试类"></a>创建测试类</h3><p>集成测试用到的测试类位于工程根目录下的test_driver目录中，默认创建的Flutter工程并不包含这个目录，因此需要手动创建它。<br>创建好这个目录后，我们还需要创建指令化的Flutter应用程序类和集成测试用到的类：     </p>
+<ol>
+<li>创建指令化的Flutter应用程序类：指令化的应用程序是启用了Flutter Driver扩展的应用程序。</li>
+<li>创建集成测试用到的类：集成测试类包含用于验证运行结果正确与否的测试套件。测试套件同样记录性能分析数据。该类的命名规则必需以与之相关的指令化应用程序类名后加_test为名。   </li>
+</ol>
+<p>本例中，指令化的Flutter应用程序类名为app.dart，集成测试用到的类则为app_test.dart。<br>创建好上述两个类后的工程目录结构如下：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lib/</span><br><span class="line">  main.dart</span><br><span class="line">test_driver/</span><br><span class="line">  app.dart</span><br><span class="line">  app_test.dart</span><br></pre></td></tr></table></figure>
+
+<h3 id="构建指令化的Flutter应用程序类"><a href="#构建指令化的Flutter应用程序类" class="headerlink" title="构建指令化的Flutter应用程序类"></a>构建指令化的Flutter应用程序类</h3><p>创建指令化的Flutter应用程序很简单，只需启动Flutter drive扩展，并运行程序即可。完整的app.dart代码如下：    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter_driver/driver_extension.dart&apos;;</span><br><span class="line">import &apos;package:demo_integration_test/main.dart&apos; as app;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">  enableFlutterDriverExtension();</span><br><span class="line">  app.main();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意：由于main()方法在app.dart中也有声明，因此这里使用了import … as …的方式导入类。在使用时利用app.main()的调用方式区分了不同类的同名的main()方法。    </p>
+<h3 id="构建集成测试用到的类"><a href="#构建集成测试用到的类" class="headerlink" title="构建集成测试用到的类"></a>构建集成测试用到的类</h3><p>在构建好指令化的Flutter应用程序后，我们就可以写针对它的测试类了。这个测试类使用Flutter driver API来指导应用程序执行操作，之后再验证这个操作是否正确。完整的app_test.dart如下：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import &apos;package:flutter_driver/flutter_driver.dart&apos;;</span><br><span class="line">import &apos;package:flutter_test/flutter_test.dart&apos;;</span><br><span class="line"></span><br><span class="line">void main() &#123;</span><br><span class="line">  group(&apos;Counter App&apos;, () &#123;</span><br><span class="line">    final counterTextFinder = find.byValueKey(&apos;counter&apos;);</span><br><span class="line">    final buttonFinder = find.byValueKey(&apos;increment&apos;);</span><br><span class="line"></span><br><span class="line">    FlutterDriver driver;</span><br><span class="line"></span><br><span class="line">    setUpAll(() async &#123;</span><br><span class="line">      driver = await FlutterDriver.connect();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    tearDownAll(() async &#123;</span><br><span class="line">      if (driver != null) &#123;</span><br><span class="line">        driver.close();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    test(&apos;starts at 0&apos;, () async &#123;</span><br><span class="line">      expect(await driver.getText(counterTextFinder), &quot;0&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    test(&apos;increments the counter&apos;, () async &#123;</span><br><span class="line">      await driver.tap(buttonFinder);</span><br><span class="line"></span><br><span class="line">      expect(await driver.getText(counterTextFinder), &quot;1&quot;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如上代码所示，首先使用find定位要测试的组件。本例中通过key的方式找到了计数值Text组件和FloatingActionButton组件。接着，在正式测试前调用setUpAll()方法连接到App。然后就是测试脚本的内容了，分别对应本例中的两个test()方法。最后调用tearDownAll()方法和App断开连接，结束测试流程。    </p>
+<h3 id="运行测试-1"><a href="#运行测试-1" class="headerlink" title="运行测试"></a>运行测试</h3><p>现在就可以运行测试代码，观察测试结果了！<br>运行方法是启动集成的命令行视图，在工程根目录下运行以下指令：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flutter drive --target=test_driver/app.dart</span><br></pre></td></tr></table></figure>
+
+<p>注意：集成测试将真正地在设备上运行App，你将看到测试操作的全过程。在测试完成后，App将自动关闭，并在命令行留下相关日志。我们可以从日志中得到类似如下的测试结果：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Using device Android SDK built for x86.</span><br><span class="line">Starting application: test_driver/app.dart</span><br><span class="line">Initializing gradle...                                              2.5s</span><br><span class="line">Resolving dependencies...                                          10.4s</span><br><span class="line">Installing build\app\outputs\apk\app.apk...                         2.3s</span><br><span class="line">Running Gradle task &apos;assembleDebug&apos;...                              8.0s</span><br><span class="line">Built build\app\outputs\apk\debug\app-debug.apk.</span><br><span class="line">I/flutter (25973): Observatory listening on http://127.0.0.1:33620/bq9GdK_WZuM=/</span><br><span class="line">00:00 [32m+0[0m: Counter App (setUpAll)[0m</span><br><span class="line">[info ] FlutterDriver: Connecting to Flutter application at http://127.0.0.1:53896/bq9GdK_WZuM=/</span><br><span class="line">[trace] FlutterDriver: Isolate found with number: 197444479</span><br><span class="line">[trace] FlutterDriver: Isolate is paused at start.</span><br><span class="line">[trace] FlutterDriver: Attempting to resume isolate</span><br><span class="line">[trace] FlutterDriver: Waiting for service extension</span><br><span class="line">[info ] FlutterDriver: Connected to Flutter application.</span><br><span class="line">00:01 [32m+0[0m: Counter App starts at 0[0m</span><br><span class="line">00:01 [32m+1[0m: Counter App increments the counter[0m</span><br><span class="line">00:04 [32m+2[0m: Counter App (tearDownAll)[0m</span><br><span class="line">00:04 [32m+2[0m: All tests passed![0m</span><br><span class="line">Stopping application instance.</span><br></pre></td></tr></table></figure>
+
+<p>到此，Flutter App的三种测试方法就讲完了，不知道各位会用了吗？    </p>
 
       
     </div>
@@ -307,11 +418,11 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://www.xiaowenhan.com.cn/2019/07/30/hello-world/" title="Hello World" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2019/07/30/hello-world/</a>
+      <a href="http://www.xiaowenhan.com.cn/2019/07/30/hello-world/" title="Flutter App 软件测试指南" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2019/07/30/hello-world/</a>
     </li>
     
     <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
     </li>
   </ul>
 </blockquote>
@@ -327,7 +438,7 @@
       </div>
       <div class="media-body">
         <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
-        <div>个人简介。</div>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
       </div>
     </figure>
   </div>
@@ -349,16 +460,24 @@
 	
     <ul class="social-links">
     	
-        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
         
-        <li><a href="https://weibo.com/206090953" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
         
     </ul>
 
     <div class="copyright">
     	
+        &copy; 2019 Wenhan Xiao
+        
         <div class="publishby">
-        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        	版权所有
         </div>
     </div>
 </footer>
