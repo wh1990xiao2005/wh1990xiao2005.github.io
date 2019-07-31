@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.xiaowenhan.com.cn/about/index.html</loc>
+    
+    <lastmod>2019-07-31T06:41:28.815Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.xiaowenhan.com.cn/2015/03/08/%E8%BD%BB%E6%9D%BE%E4%BD%BF%E7%94%A8Github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/</loc>
     
     <lastmod>2019-07-31T04:12:29.428Z</lastmod>
@@ -257,13 +264,6 @@
     <loc>http://www.xiaowenhan.com.cn/tags/index.html</loc>
     
     <lastmod>2019-07-30T05:53:39.600Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.xiaowenhan.com.cn/about/index.html</loc>
-    
-    <lastmod>2019-07-30T05:53:39.595Z</lastmod>
     
   </url>
   
