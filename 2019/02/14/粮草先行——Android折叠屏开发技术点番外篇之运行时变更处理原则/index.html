@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则 | 萧爷代码实验室</title>
+  <meta name="description" content="上一篇文章中，我们有提到Activity在屏幕尺寸发生变更时的处理方式，总共有两种：  重启APP以适应屏幕改变； 手动处理数据，避免APP重启。  同样，这两种方式也同时适用于改变屏幕方向、更改系统语言、甚至输入法等等。因此，本文也同样适用于改变屏幕方向等情况的处理。或许你会有疑问：我们该如何选择合适的处理方式呢？我给你的答案是：选择最合适的。这么说好像跟没说一样，别急，给大家举个例子就明白了：">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="上一篇文章中，我们有提到Activity在屏幕尺寸发生变更时的处理方式，总共有两种：  重启APP以适应屏幕改变； 手动处理数据，避免APP重启。  同样，这两种方式也同时适用于改变屏幕方向、更改系统语言、甚至输入法等等。因此，本文也同样适用于改变屏幕方向等情况的处理。或许你会有疑问：我们该如何选择合适的处理方式呢？我给你的答案是：选择最合适的。这么说好像跟没说一样，别急，给大家举个例子就明白了：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190214110923934.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3doMTk5MHhpYW8yMDA1,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2019-07-31T03:12:24.079Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则">
+<meta name="twitter:description" content="上一篇文章中，我们有提到Activity在屏幕尺寸发生变更时的处理方式，总共有两种：  重启APP以适应屏幕改变； 手动处理数据，避免APP重启。  同样，这两种方式也同时适用于改变屏幕方向、更改系统语言、甚至输入法等等。因此，本文也同样适用于改变屏幕方向等情况的处理。或许你会有疑问：我们该如何选择合适的处理方式呢？我给你的答案是：选择最合适的。这么说好像跟没说一样，别急，给大家举个例子就明白了：">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190214110923934.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3doMTk5MHhpYW8yMDA1,size_16,color_FFFFFF,t_70">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="article-date">
+	  <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Android/">Android</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>上一篇文章中，我们有提到Activity在屏幕尺寸发生变更时的处理方式，总共有两种：</p>
+<ol>
+<li>重启APP以适应屏幕改变；</li>
+<li>手动处理数据，避免APP重启。</li>
+</ol>
+<p>同样，这两种方式也同时适用于改变屏幕方向、更改系统语言、甚至输入法等等。<br>因此，本文也同样<strong>适用于改变屏幕方向等情况的处理。</strong><br>或许你会有疑问：<strong>我们该如何选择合适的处理方式呢？</strong><br>我给你的答案是：<strong>选择最合适的。</strong><br>这么说好像跟没说一样，别急，给大家举个例子就明白了：<br>比如更改屏幕方向，由竖屏转换为横屏，如果我们只有一套布局，符合按比例缩放仍然显示正常的话，我们大可以选择第2种处理方案。但是如果我们的横竖屏布局是不同的，比如系统中的“设置”应用，那么我们选择第2种处理方案就是不合适的。<br>下图：<br><img src="https://img-blog.csdnimg.cn/20190214110923934.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3doMTk5MHhpYW8yMDA1,size_16,color_FFFFFF,t_70" alt="横竖屏采用不同布局的样例"><br>这是一个典型的横竖屏分别采用不同布局的例子。<br>我们确定要采取那种解决方案后，接下来很可能要面对另一个问题，就是性能瓶颈。<br>根据前一篇文章的实验结果，在发生横竖屏切换的时候，Activity的生命周期通常会按照如下顺序依次执行：</p>
+<blockquote>
+<p>D/MainActivity: onPause<br>D/MainActivity: onSaveInstanceState<br>D/MainActivity: onStop<br>D/MainActivity: onDestroy<br>D/MainActivity: onCreate<br>D/MainActivity: onStart<br>D/MainActivity: onRestoreInstanceState<br>D/MainActivity: onResume  </p>
+</blockquote>
+<p>如果我们在生命周期中做了一些繁重的工作，那么整个Activity在重启的过程中就会很慢。<br>要解决这个问题，首先我们要找Fragment帮忙，因为Bundle并不是用来传递大型对象的，而且这个对象还需要序列化和反序列化，如此执行起来就更慢了。<br>当然，如果你只是保存一些整型或者字符串的话，单纯使用Bundle而不借助Fragment也是可以的，但是这样的场景在实际开发中并不常见。<br>要借助Fragment来中转对象，我们采用下面三步走的方式：</p>
+<ol>
+<li>在Fragment类中调用 setRetainInstance(true)；</li>
+<li>在Activity销毁时向Fragment类存入数据；</li>
+<li>在Activity重建后根据Tag检索Fragment，并取出之前存入的数据。</li>
+</ol>
+<p>下面用具体的代码片来演示：<br>首先来看Fragment类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class TestFragment extends Fragment &#123;</span><br><span class="line"></span><br><span class="line">    private MyData data;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setRetainInstance(true);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setData(MyData data) &#123;</span><br><span class="line">        this.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public MyData getData() &#123;</span><br><span class="line">        return data;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们再来看Activity类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public class MyActivity extends Activity &#123;</span><br><span class="line"></span><br><span class="line">    private TestFragment mTestFragment ;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.main);</span><br><span class="line">        FragmentManager fm = getFragmentManager();</span><br><span class="line">        mTestFragment = (TestFragment)fm.findFragmentByTag(“test”);</span><br><span class="line"></span><br><span class="line">        if (retainedFragment == null) &#123;</span><br><span class="line">            mTestFragment = new TestFragment ();</span><br><span class="line">            fm.beginTransaction().add(mTestFragment, “test”).commit();</span><br><span class="line">            mTestFragment.setData(restoreData());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onDestroy() &#123;</span><br><span class="line">        super.onDestroy();</span><br><span class="line">        mTestFragment.setData(saveData());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里还要特别注意一点：在中转对象数据时，不要传入与Activity紧密相关的对象，比如View，否则会造成内存泄漏。<br>至此，就完成了对重启Activity方案的性能优化。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" title="粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" title="粮草先行——Android折叠屏开发技术点（二）"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/01/30/粮草先行——Android折叠屏开发技术点（一）/" title="粮草先行——Android折叠屏开发技术点（一）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

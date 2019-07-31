@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Android 5.0(L) ToolBar(替代ActionBar) 实战（二） | 萧爷代码实验室</title>
+  <meta name="description" content="上一次我们说到ToolBar的创建，这次我们来讨论一下ToolBar结合ViewPager实现类似微信的左右滑屏多个界面的效果。要实现滑屏，首先我们要到Android开发者官网去下载一个示例代码，它封装了Viewpager和Tab配合切换页卡的方法。当然，我们也可以自己来实现，为了节约时间成本，就直接拿来用了。如果在官网找不到或者无奈被墙，可以到这里下载：http://download.csdn.">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 5.0(L) ToolBar(替代ActionBar) 实战（二）">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="上一次我们说到ToolBar的创建，这次我们来讨论一下ToolBar结合ViewPager实现类似微信的左右滑屏多个界面的效果。要实现滑屏，首先我们要到Android开发者官网去下载一个示例代码，它封装了Viewpager和Tab配合切换页卡的方法。当然，我们也可以自己来实现，为了节约时间成本，就直接拿来用了。如果在官网找不到或者无奈被墙，可以到这里下载：http://download.csdn.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20141031161432427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141031164441484?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141031171242013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141031171311996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141031171337268?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2019-07-31T01:37:45.075Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 5.0(L) ToolBar(替代ActionBar) 实战（二）">
+<meta name="twitter:description" content="上一次我们说到ToolBar的创建，这次我们来讨论一下ToolBar结合ViewPager实现类似微信的左右滑屏多个界面的效果。要实现滑屏，首先我们要到Android开发者官网去下载一个示例代码，它封装了Viewpager和Tab配合切换页卡的方法。当然，我们也可以自己来实现，为了节约时间成本，就直接拿来用了。如果在官网找不到或者无奈被墙，可以到这里下载：http://download.csdn.">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20141031161432427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Android 5.0(L) ToolBar(替代ActionBar) 实战（二）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 5.0(L) ToolBar(替代ActionBar) 实战（二）
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/" class="article-date">
+	  <time datetime="2014-10-31T09:16:27.000Z" itemprop="datePublished">2014-10-31</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Android/">Android</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>上一次我们说到ToolBar的创建，这次我们来讨论一下ToolBar结合ViewPager实现类似微信的左右滑屏多个界面的效果。<br>要实现滑屏，首先我们要到Android开发者官网去下载一个示例代码，它封装了Viewpager和Tab配合切换页卡的方法。当然，我们也可以自己来实现，为了节约时间成本，就直接拿来用了。如果在官网找不到或者无奈被墙，可以到这里下载：<a href="http://download.csdn.net/detail/wh1990xiao2005/8105345" target="_blank" rel="noopener">http://download.csdn.net/detail/wh1990xiao2005/8105345</a>   </p>
+<p>把下载好的工具类复制到项目指定的包内，我是在之前的项目中创建了view专用的包，并将这两个类复制了进去。   </p>
+<p><img src="https://img-blog.csdn.net/20141031161432427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="项目结构"></p>
+<p>这里要注意，复制进去之后有可能会报错，因为包名不符，只需把package包名修改为自己的类所在包名即可。<br>打开布局文件，在上次Toolbar的声明下面添加SlidingTabLayout和ViewPager控件，下面放上示例：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res/com.xwh.toolbardemo&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    tools:context=&quot;com.xwh.toolbardemo.MainActivity&quot; &gt;</span><br><span class="line"> </span><br><span class="line">    &lt;android.support.v7.widget.Toolbar</span><br><span class="line">        android:id=&quot;@+id/demo_toolbar&quot;</span><br><span class="line">        android:layout_width=&quot;fill_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:background=&quot;?attr/colorPrimary&quot;</span><br><span class="line">        android:minHeight=&quot;?attr/actionBarSize&quot;</span><br><span class="line">        app:title=&quot;@string/hello_world&quot; /&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;com.xwh.toolbardemo.view.SlidingTabLayout</span><br><span class="line">        android:id=&quot;@+id/demo_tab&quot;</span><br><span class="line">        android:layout_width=&quot;fill_parent&quot;</span><br><span class="line">        android:layout_height=&quot;wrap_content&quot;</span><br><span class="line">        android:layout_below=&quot;@+id/demo_toolbar&quot; /&gt;</span><br><span class="line"> </span><br><span class="line">    &lt;android.support.v4.view.ViewPager</span><br><span class="line">        android:id=&quot;@+id/demo_vp&quot;</span><br><span class="line">        android:layout_width=&quot;fill_parent&quot;</span><br><span class="line">        android:layout_height=&quot;fill_parent&quot;</span><br><span class="line">        android:layout_below=&quot;@+id/demo_tab&quot; /&gt;</span><br><span class="line"> </span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+
+<p>ToolBar不用多说，SlidingTabLayout实际上是上方的Tab视图，而ViewPager是页卡的容器，而页卡是稍后添加的多个Fragment。<br>下面我们来写三个Layout的xml文件和相关的三个Fragment的Java代码，分别代表三个页卡。  </p>
+<p>第一个页卡随意放置一个图片，代码如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;ImageView xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    android:contentDescription=&quot;@string/app_name&quot;</span><br><span class="line">    android:src=&quot;@drawable/ic_launcher&quot; &gt;</span><br><span class="line"> </span><br><span class="line">&lt;/ImageView&gt;</span><br></pre></td></tr></table></figure>
+
+<p>第二个页卡放置一个模拟时钟，代码如下：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;AnalogClock xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot; &gt;</span><br><span class="line">&lt;/AnalogClock&gt;</span><br></pre></td></tr></table></figure>
+
+<p>第三个页卡放置一个数字时钟，代码如下：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;DigitalClock xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;match_parent&quot;</span><br><span class="line">    android:gravity=&quot;center&quot;</span><br><span class="line">    android:textSize=&quot;40sp&quot; &gt;</span><br><span class="line">&lt;/DigitalClock&gt;</span><br></pre></td></tr></table></figure>
+
+<p>相应的，创建三个Fragment的Java代码文件，这里只列出其中一个文件的程序清单，另外两个按此自行编写：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.xwh.toolbardemo.fragment;</span><br><span class="line"> </span><br><span class="line">import com.xwh.toolbardemo.R;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line">import android.support.v4.app.Fragment;</span><br><span class="line">import android.view.LayoutInflater;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.view.ViewGroup;</span><br><span class="line"> </span><br><span class="line">public class Fragment_Tab_1 extends Fragment &#123;</span><br><span class="line">	@Override</span><br><span class="line">	public View onCreateView(LayoutInflater inflater, ViewGroup container,</span><br><span class="line">			Bundle savedInstanceState) &#123;</span><br><span class="line">		return inflater.inflate(R.layout.fragment_tab_1, container, false);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我们还需一个适配器（Adapter），用于将这三个Fragment适配到ViewPager之上，下面列出适配器的Java程序代码清单：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">package com.xwh.toolbardemo.adapter;</span><br><span class="line"> </span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import android.support.v4.app.Fragment;</span><br><span class="line">import android.support.v4.app.FragmentManager;</span><br><span class="line">import android.support.v4.app.FragmentPagerAdapter;</span><br><span class="line"> </span><br><span class="line">public class ViewPager_Adapter extends FragmentPagerAdapter &#123;</span><br><span class="line"> </span><br><span class="line">	private ArrayList&lt;Fragment&gt; fragments;</span><br><span class="line"> </span><br><span class="line">	public ViewPager_Adapter(FragmentManager fm, ArrayList&lt;Fragment&gt; fragments) &#123;</span><br><span class="line">		super(fm);</span><br><span class="line">		this.fragments = fragments;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public Fragment getItem(int pos) &#123;</span><br><span class="line">		return fragments.get(pos);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public int getCount() &#123;</span><br><span class="line">		return fragments.size();</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	public CharSequence getPageTitle(int position) &#123;</span><br><span class="line">		return &quot;Tab_&quot; + position;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这里需要注意：下方的getPageTitle()方法是必要的，他用于相应Tab名称的显示。</strong><br>到此，我的程序架构如下图所示：   </p>
+<p><img src="https://img-blog.csdn.net/20141031164441484?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="程序架构图"></p>
+<p>接下来，我们将三个Fragment通过Adapter适配到ViewPager上，这一过程，我们只对MainActivity做操作。完整代码如下所示：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">package com.xwh.toolbardemo;</span><br><span class="line"> </span><br><span class="line">import java.util.ArrayList;</span><br><span class="line"> </span><br><span class="line">import com.xwh.toolbardemo.adapter.ViewPager_Adapter;</span><br><span class="line">import com.xwh.toolbardemo.fragment.Fragment_Tab_1;</span><br><span class="line">import com.xwh.toolbardemo.fragment.Fragment_Tab_2;</span><br><span class="line">import com.xwh.toolbardemo.fragment.Fragment_Tab_3;</span><br><span class="line">import com.xwh.toolbardemo.view.SlidingTabLayout;</span><br><span class="line"> </span><br><span class="line">import android.support.v4.app.Fragment;</span><br><span class="line">import android.support.v4.view.ViewPager;</span><br><span class="line">import android.support.v7.app.ActionBarActivity;</span><br><span class="line">import android.support.v7.widget.Toolbar;</span><br><span class="line">import android.os.Bundle;</span><br><span class="line"> </span><br><span class="line">public class MainActivity extends ActionBarActivity &#123;</span><br><span class="line"> </span><br><span class="line">	private Toolbar toolbar;</span><br><span class="line">	private SlidingTabLayout slidingTabLayout;</span><br><span class="line">	private ViewPager viewPager;</span><br><span class="line"> </span><br><span class="line">	private ArrayList&lt;Fragment&gt; fragments;</span><br><span class="line">	private ViewPager_Adapter viewPager_Adapter;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">		super.onCreate(savedInstanceState);</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">		findView();</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	// 初始化控件</span><br><span class="line">	private void findView() &#123;</span><br><span class="line">		// 实例化控件</span><br><span class="line">		toolbar = (Toolbar) findViewById(R.id.demo_toolbar);</span><br><span class="line">		slidingTabLayout = (SlidingTabLayout) findViewById(R.id.demo_tab);</span><br><span class="line">		viewPager = (ViewPager) findViewById(R.id.demo_vp);</span><br><span class="line">		// 设置ViewPager</span><br><span class="line">		fragments = new ArrayList&lt;Fragment&gt;();</span><br><span class="line">		fragments.add(new Fragment_Tab_1());</span><br><span class="line">		fragments.add(new Fragment_Tab_2());</span><br><span class="line">		fragments.add(new Fragment_Tab_3());</span><br><span class="line">		viewPager_Adapter = new ViewPager_Adapter(getSupportFragmentManager(),</span><br><span class="line">				fragments);</span><br><span class="line">		viewPager.setOffscreenPageLimit(fragments.size());</span><br><span class="line">		viewPager.setAdapter(viewPager_Adapter);</span><br><span class="line">		// 设置SlidingTab</span><br><span class="line">		slidingTabLayout.setViewPager(viewPager);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到此，我们可以Ctrl+F11运行看效果了。如果不出意外的话，会是下面的效果：   </p>
+<p><img src="https://img-blog.csdn.net/20141031171242013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="运行效果图 Tab1"></p>
+<p><img src="https://img-blog.csdn.net/20141031171311996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="运行效果图 Tab2"></p>
+<p><img src="https://img-blog.csdn.net/20141031171337268?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="运行效果图 Tab3"></p>
+<p>仔细观察可以发现，ToolBar比ActionBar更好的一点在于上方Tab的选中状态，是根据滑动程度来的，而传统的ActionBar略显生硬。<br>第二篇Toolbar文章到此为止，在下一篇里，我们将集中介绍Menu的使用以及关于Toolbar的更多功能，欢迎关注！   </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（二）" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（三）"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2014/10/30/Android 5.0(L) ToolBar(替代ActionBar) 实战（一）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（一）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

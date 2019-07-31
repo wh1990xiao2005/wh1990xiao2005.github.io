@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器 | 萧爷代码实验室</title>
+  <meta name="description" content="今天看新闻，发现IntelliJ IDEA版本出了14，本着生命在于折腾的原则，下载并安装。当然，是开玩笑的啦！作为比较资深的Android开发者，相信朋友们不会不知道Android Studio这个软件。它就是基于IntelliJ IDEA（以下简称IDEA），所以借着新版本的发布，看看最原始的IDEA是个什么模样。注：大家一定要有信心，这款IDE我上手的时间仅仅用了2个小时不到，个人感觉还是比">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2014/11/06/IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="今天看新闻，发现IntelliJ IDEA版本出了14，本着生命在于折腾的原则，下载并安装。当然，是开玩笑的啦！作为比较资深的Android开发者，相信朋友们不会不知道Android Studio这个软件。它就是基于IntelliJ IDEA（以下简称IDEA），所以借着新版本的发布，看看最原始的IDEA是个什么模样。注：大家一定要有信心，这款IDE我上手的时间仅仅用了2个小时不到，个人感觉还是比">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106191706001?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106192220312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106192406968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106192718692?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106193148781?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106193436984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106193535350?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141106194006140?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2019-07-31T02:20:29.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器">
+<meta name="twitter:description" content="今天看新闻，发现IntelliJ IDEA版本出了14，本着生命在于折腾的原则，下载并安装。当然，是开玩笑的啦！作为比较资深的Android开发者，相信朋友们不会不知道Android Studio这个软件。它就是基于IntelliJ IDEA（以下简称IDEA），所以借着新版本的发布，看看最原始的IDEA是个什么模样。注：大家一定要有信心，这款IDE我上手的时间仅仅用了2个小时不到，个人感觉还是比">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20141106191706001?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2014/11/06/IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2014/11/06/IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器/" class="article-date">
+	  <time datetime="2014-11-06T11:42:33.000Z" itemprop="datePublished">2014-11-06</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Java/">Java</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2014/11/06/IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>今天看新闻，发现IntelliJ IDEA版本出了14，本着生命在于折腾的原则，下载并安装。<br>当然，是开玩笑的啦！作为比较资深的Android开发者，相信朋友们不会不知道Android Studio这个软件。它就是基于IntelliJ IDEA（以下简称IDEA），所以借着新版本的发布，看看最原始的IDEA是个什么模样。<br>注：大家一定要有信心，这款IDE我上手的时间仅仅用了2个小时不到，个人感觉还是比较适合我的。如果花上两个小时能够提高日后的编码效率，还是很值得的。<br>IDEA分为两大版本，Ultimate（付费）和Community（免费）。大家可以搜索一下，他们的差距还是相当大的，主要区别在于对Web开发的支持。虽然我只是在Android平台上面开发，但是谁又说得准会不会写个JSP之类的，万一要写了呢？所以我使用了功能比较全面的Ultimate（收费软件在我国情况……大家了解的，可以去下载相关工具）。<br>不出意外的话，首次运行会让用户选择使用的插件，默认是全开，一路下一步后显示下面的界面：   </p>
+<p><img src="https://img-blog.csdn.net/20141106191706001?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="IDEA 14启动界面"></p>
+<p>这里大家明确一下概念，往常在Eclipse中，有个“Workspace”的概念，我们会把很多项目放在一个工作空间中。到了idea中，完全不一样了。它的做法是，一个Project对应一个Module，一个Module对应我们的一个项目。但是不推荐一个Project包含多个Module，因为默认情况下输出目录之类的文件会放在一起，这也是官方不建议的。简而言之，就是一个Project对应一个项目，没有Workspace的概念。<br>下面我们创建android应用程序，在此之前要创建一个Project，类型为Android。<br><img src="https://img-blog.csdn.net/20141106192220312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="新建项目"></p>
+<p>大家注意看左边的类型，免费版会少很多，真的是很多。所以再次提醒一下，防患于未然，万一要用呢。<br>下一步后和Eclipse里面创建项目大体相当，不再多说。   </p>
+<p><img src="https://img-blog.csdn.net/20141106192406968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="创建项目"></p>
+<p>下一屏幕我们需要指定一下使用的JDK和SAndroid SDK版本，注意这里需要选择兼容的最低版本。单击“New…”之后，我们依次进行选择：   </p>
+<p><img src="https://img-blog.csdn.net/20141106192718692?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="填写必要的信息"></p>
+<p>上图中，最后一项是运行选项，我们保持默认（运行时选择要运行该应用的设备）。<br>完成后需要一段时间的等待，然后我们就可以顺利进入工作环境了。   </p>
+<p><img src="https://img-blog.csdn.net/20141106193148781?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="工作区"></p>
+<p>我们可以发现，界面整体感觉还是很清晰、简洁的。<br>要运行HelloWorld，需要Shift+F10即可。<br>此外，对于Android的布局，有了实时预览功能：   </p>
+<p><img src="https://img-blog.csdn.net/20141106193436984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="实时预览">   </p>
+<p>这一点在Eclipse上面是不太好实现的，起码我没有找到这个功能，而这一功能可以说是广大Android开发者的福音。<br>不仅如此，对于不建议使用的控件，在设计视图中也有明确的提示：    </p>
+<p><img src="https://img-blog.csdn.net/20141106193535350?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="废弃的控件提示">   </p>
+<p>另外，诸位如果使用过最新版本的Eclipse Luna的话，可以发现有全黑主题了，但个人感觉Idea的全黑主题更好一些。这个大家可以从File-&gt;Settings-&gt;Appearance % Behavior-&gt;Appearance中选择Theme为Darcula。另外，还支持全屏显示（View-&gt;Enter Full Screen），这样一来，全屏都会是暗色系。   </p>
+<p><img src="https://img-blog.csdn.net/20141106194006140?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Darcula主题的IDEA"></p>
+<p>以上给广大开发者，尤其是Android开发者一个IDE的介绍，上手不难。用久了Eclipse后，换一个风格迥异的IDE也是一个不错的选择。最后希望上述内容能够提供一些比较实用的参考价值。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2014/11/06/IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器/" title="IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2014/11/06/IntelliJ IDEA 14 值得你弃用Eclipse的IDE神器/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2015/03/08/轻松使用Github搭建个人网站/" title="轻松使用Github搭建个人网站"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2014/11/05/Android 5.0(L) ToolBar(替代ActionBar) 实战（四）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（四）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

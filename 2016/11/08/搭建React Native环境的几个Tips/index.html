@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>搭建React Native环境的几个Tips | 萧爷代码实验室</title>
+  <meta name="description" content="博主最近在研究跨平台开发，打算好好研究一下React Native这个比较被大家熟知的玩意。昨天进行了环境搭建和初步的学习，感觉上手还算快。在这里，把一些已经发现的坑，提前告诉给各位，希望能让读者们少走一些弯路。首先说一下无论是Mac，Windows，还是Linux，如果有能力，请直接去英文官网查看文档，不要看中文官网，真的有坑，稍候细说。我的环境，Mac，Windows都有，先说Windows。">
+<meta name="keywords" content="React Native">
+<meta property="og:type" content="article">
+<meta property="og:title" content="搭建React Native环境的几个Tips">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2016/11/08/搭建React Native环境的几个Tips/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="博主最近在研究跨平台开发，打算好好研究一下React Native这个比较被大家熟知的玩意。昨天进行了环境搭建和初步的学习，感觉上手还算快。在这里，把一些已经发现的坑，提前告诉给各位，希望能让读者们少走一些弯路。首先说一下无论是Mac，Windows，还是Linux，如果有能力，请直接去英文官网查看文档，不要看中文官网，真的有坑，稍候细说。我的环境，Mac，Windows都有，先说Windows。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-31T02:53:57.775Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭建React Native环境的几个Tips">
+<meta name="twitter:description" content="博主最近在研究跨平台开发，打算好好研究一下React Native这个比较被大家熟知的玩意。昨天进行了环境搭建和初步的学习，感觉上手还算快。在这里，把一些已经发现的坑，提前告诉给各位，希望能让读者们少走一些弯路。首先说一下无论是Mac，Windows，还是Linux，如果有能力，请直接去英文官网查看文档，不要看中文官网，真的有坑，稍候细说。我的环境，Mac，Windows都有，先说Windows。">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2016/11/08/搭建React Native环境的几个Tips/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-搭建React Native环境的几个Tips" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      搭建React Native环境的几个Tips
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2016/11/08/搭建React Native环境的几个Tips/" class="article-date">
+	  <time datetime="2016-11-08T00:09:47.000Z" itemprop="datePublished">2016-11-08</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/React-Native/">React Native</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2016/11/08/搭建React Native环境的几个Tips/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>博主最近在研究跨平台开发，打算好好研究一下React Native这个比较被大家熟知的玩意。<br>昨天进行了环境搭建和初步的学习，感觉上手还算快。在这里，把一些已经发现的坑，提前告诉给各位，希望能让读者们少走一些弯路。<br>首先说一下无论是Mac，Windows，还是Linux，如果有能力，请直接去英文官网查看文档，不要看中文官网，真的有坑，稍候细说。<br>我的环境，Mac，Windows都有，先说Windows。<br>Windows环境暂且肯定是不支持开发iOS应用的哈，这个大家应该知道。然后大家按照官网文档中的步骤来就行。这里放一个链接：<br><a href="https://facebook.github.io/react-native/docs/getting-started.html" target="_blank" rel="noopener">https://facebook.github.io/react-native/docs/getting-started.html</a><br>这个给大家提个醒，最好全程备梯子翻墙。<br>说下Chocolatey，比较简单的方法就是cmd里面执行语句，很快就行了，这个是前提，没有Chocolatey，就没有后面的步骤，所以不要被它卡住。<br>这里放下cmd命令：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;iex((new-object net.webclient).DownloadString(&apos;https://chocolatey.org/install.ps1&apos;))&quot; &amp;&amp; SET PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin</span><br></pre></td></tr></table></figure>
+
+<p>网络畅通的话几秒钟就安装好了。<br>接下来就是Node和Python，这个按照官网的指令来就可以了。还是那句话，网络畅通的话也是很快就好了。这里可能Python慢一点，多等一下就会好。<br>再下来就是准备Android开发环境，什么SDK啊，IDE（Android Studio）啊都备好。SDK的话我建议大家，下全，如果硬盘空间足够，就做个全下载吧。<br>再下来安装React Native Cli，这一步，关掉cmd窗口，再开个新的，才能使用新的环境变量，也就是npm正常工作。重新打开cmd窗口后，还是按照官网的指引，安装React Native Cli。这一步会有命令行版的进度指示，虽然不太美观，至少还算直观。<br>再下来配置Android SDK环境变量，这一步必须配，否则再下来会报错。配置的方法依然按照官方文档走。<br>设置完环境变量之后，就可以运行了，首先cmd进入一个文件夹，这个文件夹将作为项目代码文件夹，可以新建，这个就随意了。<br>运行<code>react-native init AwesomeProject</code>后，会出现install若干包的提示，这个是正常的，而且仅当新建项目的时候会有这个步骤，日后重新运行就没有了，而且不可省略，因此这里多等待一下吧。<br>若干分钟后，进入新项目目录下执行<code>react-native run-android</code>，代码就运行起来了，和在Android Studio里面按Shift+F10（默认的Windows环境下的“运行”快捷键）的效果是一样的。这一步在首次运行时也需要下载一堆东西，日后也是无需的。<br>部署到手机上之后，按手机的菜单键，或<code>adb shell input keyevent 82</code>唤出菜单键效果，在<code>Dev Settings</code>项里面把PC端IP和端口设置好。具体方法参见：<a href="https://facebook.github.io/react-native/docs/running-on-device-android.html" target="_blank" rel="noopener">https://facebook.github.io/react-native/docs/running-on-device-android.html</a><br>文档里有详细的说明，当然，中文文档在部署运行上给出的向导一样贴心。<br>再来说下Mac平台。<br>到Mac平台就简单多了，还是按照官网的指示就行，没什么好特别强调的。不过这里还是要给大家提个醒，如果你看的是React Native的中文官网，那么，在安装node之后，在推荐安装里你会发现推荐安装Watchman。这个必须装，不是选装组件，是必须的，否则电脑端JS Server会报错，手机也会红屏报错，切记！  </p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2016/11/08/搭建React Native环境的几个Tips/" title="搭建React Native环境的几个Tips" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2016/11/08/搭建React Native环境的几个Tips/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2016/12/19/Android 6.0 运行时权限简明处理/" title="Android 6.0 运行时权限简明处理"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2016/10/16/简易实现脸部贴近自动关屏/" title="简易实现脸部贴近自动关屏"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

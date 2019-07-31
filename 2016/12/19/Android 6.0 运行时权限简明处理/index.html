@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Android 6.0 运行时权限简明处理 | 萧爷代码实验室</title>
+  <meta name="description" content="今天来跟大家聊这样一个话题——权限。正如各位所知，传统意义上的权限是在用户安装APP时被许可的。尽管在使用过程中，某些第三方Rom或者安全软件会再次提示权限，但从系统本身来说，就是被放行了。在Google推出6.0之后，引入了新的权限机制，叫做运行时权限（Runtime Permission）。该机制限制某些敏感的权限，比如读写外置存储，访问隐私数据等等。对用户的数据保护提供良好的保障，但同时也为">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 6.0 运行时权限简明处理">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2016/12/19/Android 6.0 运行时权限简明处理/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="今天来跟大家聊这样一个话题——权限。正如各位所知，传统意义上的权限是在用户安装APP时被许可的。尽管在使用过程中，某些第三方Rom或者安全软件会再次提示权限，但从系统本身来说，就是被放行了。在Google推出6.0之后，引入了新的权限机制，叫做运行时权限（Runtime Permission）。该机制限制某些敏感的权限，比如读写外置存储，访问隐私数据等等。对用户的数据保护提供良好的保障，但同时也为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-31T02:58:09.836Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 6.0 运行时权限简明处理">
+<meta name="twitter:description" content="今天来跟大家聊这样一个话题——权限。正如各位所知，传统意义上的权限是在用户安装APP时被许可的。尽管在使用过程中，某些第三方Rom或者安全软件会再次提示权限，但从系统本身来说，就是被放行了。在Google推出6.0之后，引入了新的权限机制，叫做运行时权限（Runtime Permission）。该机制限制某些敏感的权限，比如读写外置存储，访问隐私数据等等。对用户的数据保护提供良好的保障，但同时也为">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2016/12/19/Android 6.0 运行时权限简明处理/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Android 6.0 运行时权限简明处理" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 6.0 运行时权限简明处理
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2016/12/19/Android 6.0 运行时权限简明处理/" class="article-date">
+	  <time datetime="2016-12-19T09:15:00.000Z" itemprop="datePublished">2016-12-19</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Android/">Android</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2016/12/19/Android 6.0 运行时权限简明处理/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>今天来跟大家聊这样一个话题——权限。<br>正如各位所知，传统意义上的权限是在用户安装APP时被许可的。尽管在使用过程中，某些第三方Rom或者安全软件会再次提示权限，但从系统本身来说，就是被放行了。<br>在Google推出6.0之后，引入了新的权限机制，叫做运行时权限（Runtime Permission）。该机制限制某些敏感的权限，比如读写外置存储，访问隐私数据等等。对用户的数据保护提供良好的保障，但同时也为开发者提供了一些绊脚石。<br>那么作为一名开发者，应该如何做呢？<br>首先就是端正心态，这样做确实是对用户有好处的。<br>然后就是学习了，也就是本篇文章的正题。<br>我们按照Android studio的新建项目向导建立新的空项目后，按照原先的方法在Androidmanifest.xml做权限声明，如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.READ_EXTERNAL_STORAGE&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>然后在Activity中尝试新建一个文件，如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">File newFile = new File(Environment.getExternalStorageDirectory() + File.separator + &quot;test.txt&quot;);</span><br><span class="line">if (newFile.exists() &amp;&amp; newFile.isFile()) &#123;</span><br><span class="line">    newFile.delete();</span><br><span class="line">&#125;</span><br><span class="line">try &#123;</span><br><span class="line">    newFile.createNewFile();</span><br><span class="line">    Toast.makeText(this, &quot;文件创建成功&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">&#125; catch (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    Toast.makeText(this, &quot;文件创建失败&quot;, Toast.LENGTH_SHORT).show();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后运行，如果你的手机是基于Android 6.0，你就会发现，文件根本没有办法被创建。会报Permission denied 错误，意思就是权限禁止。<br>解决的方法也很简单，分两步走，第一步先授权，第二步就是在授权响应的回调接口中获取到授权是否成功的值。<br>授权的方法可参考如下代码片： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private void checkStoragePermission() &#123;</span><br><span class="line">    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) &#123;</span><br><span class="line">        //未授权，请求授权</span><br><span class="line">        ActivityCompat.requestPermissions(this, new String[]&#123;Manifest.permission.WRITE_EXTERNAL_STORAGE&#125;, REQ_PERMISSION_STORAGE);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此处有检查，如果未经授权，则去授权。<br>授权响应回调中的处理可参考如下代码片：  </p>
+<pre><code>if (requestCode == REQ_PERMISSION_STORAGE) {
+    if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        Toast.makeText(this, &quot;得到授权&quot;, Toast.LENGTH_SHORT).show();
+    } else {
+        Toast.makeText(this, &quot;授权取消&quot;, Toast.LENGTH_SHORT).show();
+    }
+}</code></pre><p>各位可在Toast处按照项目需求做出具体的适合自己项目的处理。<br>上述完整的代码已经放到Github上面，有兴趣的朋友可以下载查看，网址：<a href="https://github.com/XiaoWenHan/AndroidRunTimePermissionDemo/" target="_blank" rel="noopener">https://github.com/XiaoWenHan/AndroidRunTimePermissionDemo/</a><br>下面附上需要做类似处理的权限列表： </p>
+<ul>
+<li>身体传感器</li>
+<li>日历</li>
+<li>摄像头</li>
+<li>通讯录</li>
+<li>地理位置</li>
+<li>麦克风</li>
+<li>电话</li>
+<li>短信</li>
+<li>存储空间 </li>
+</ul>
+<p>给大家提个醒，如果你项目中的targetSdk&lt;23，是无需做上述处理的。<br>目前，针对运行时授权处理的框架已经有一些了，感兴趣的朋友可以去看看。下面放上几个：  </p>
+<ul>
+<li><p>PermissionsDispatcher<br>使用标注的方式，动态生成类处理运行时权限，目前还不支持嵌套Fragment。</p>
+</li>
+<li><p>RxPermissions<br>基于RxJava的运行时权限检测框架</p>
+</li>
+<li><p>Grant<br>简化运行时权限的处理，比较灵活</p>
+</li>
+<li><p>android-RuntimePermissions<br>Google官方的例子  </p>
+</li>
+</ul>
+<p>最后，放上一个无需权限处理即可使用的权限：  </p>
+<blockquote>
+<p>android.permission.ACCESS_LOCATION_EXTRA_COMMANDS<br>android.permission.ACCESS_NETWORK_STATE<br>android.permission.ACCESS_NOTIFICATION_POLICY<br>android.permission.ACCESS_WIFI_STATE<br>android.permission.ACCESS_WIMAX_STATE<br>android.permission.BLUETOOTH<br>android.permission.BLUETOOTH_ADMIN<br>android.permission.BROADCAST_STICKY<br>android.permission.CHANGE_NETWORK_STATE<br>android.permission.CHANGE_WIFI_MULTICAST_STATE<br>android.permission.CHANGE_WIFI_STATE<br>android.permission.CHANGE_WIMAX_STATE<br>android.permission.DISABLE_KEYGUARD<br>android.permission.EXPAND_STATUS_BAR<br>android.permission.FLASHLIGHT<br>android.permission.GET_ACCOUNTS<br>android.permission.GET_PACKAGE_SIZE<br>android.permission.INTERNET<br>android.permission.KILL_BACKGROUND_PROCESSES<br>android.permission.MODIFY_AUDIO_SETTINGS<br>android.permission.NFC<br>android.permission.READ_SYNC_SETTINGS<br>android.permission.READ_SYNC_STATS<br>android.permission.RECEIVE_BOOT_COMPLETED<br>android.permission.REORDER_TASKS<br>android.permission.REQUEST_INSTALL_PACKAGES<br>android.permission.SET_TIME_ZONE<br>android.permission.SET_WALLPAPER<br>android.permission.SET_WALLPAPER_HINTS<br>android.permission.SUBSCRIBED_FEEDS_READ<br>android.permission.TRANSMIT_IR<br>android.permission.USE_FINGERPRINT<br>android.permission.VIBRATE<br>android.permission.WAKE_LOCK<br>android.permission.WRITE_SYNC_SETTINGS<br>com.android.alarm.permission.SET_ALARM<br>com.android.launcher.permission.INSTALL_SHORTCUT<br>com.android.launcher.permission.UNINSTALL_SHORTCUT</p>
+</blockquote>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2016/12/19/Android 6.0 运行时权限简明处理/" title="Android 6.0 运行时权限简明处理" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2016/12/19/Android 6.0 运行时权限简明处理/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2016/12/22/Mapbox 地图SDK极速集成指导/" title="Mapbox 地图SDK极速集成指导"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2016/11/08/搭建React Native环境的几个Tips/" title="搭建React Native环境的几个Tips"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

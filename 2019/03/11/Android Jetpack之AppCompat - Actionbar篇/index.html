@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Android Jetpack之AppCompat - Actionbar篇 | 萧爷代码实验室</title>
+  <meta name="description" content="今天我们来聊一聊有关AppCompat，作为Android Jetpack系列文章的开篇。说到Android Jetpack，我们先看一下这张图：        从图中我们可以看到，整个Android Jetpack分为了四大部分，而我们今天要讲述的就是Foundation中的AppCompat小节，官方将该部分翻译为“基础”。Google官方网站：https://developer.androi">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Jetpack之AppCompat - Actionbar篇">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="今天我们来聊一聊有关AppCompat，作为Android Jetpack系列文章的开篇。说到Android Jetpack，我们先看一下这张图：        从图中我们可以看到，整个Android Jetpack分为了四大部分，而我们今天要讲述的就是Foundation中的AppCompat小节，官方将该部分翻译为“基础”。Google官方网站：https://developer.androi">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC0zNTRjODMxNGIzMzZkZjU3LnBuZw">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC0zNTI2ZGYxNjMzZDcwMmExLnBuZw">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC01NDJjZmEwNzM4MmVjMzgxLmpwZw">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC1jYjMxN2Y4YzA1ZGE5ZWY4LnBuZw">
+<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy85NDA2OTAtMWJmZDM2NDg0NTczMzg1Zi5naWY">
+<meta property="og:updated_time" content="2019-07-31T03:21:53.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Jetpack之AppCompat - Actionbar篇">
+<meta name="twitter:description" content="今天我们来聊一聊有关AppCompat，作为Android Jetpack系列文章的开篇。说到Android Jetpack，我们先看一下这张图：        从图中我们可以看到，整个Android Jetpack分为了四大部分，而我们今天要讲述的就是Foundation中的AppCompat小节，官方将该部分翻译为“基础”。Google官方网站：https://developer.androi">
+<meta name="twitter:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC0zNTRjODMxNGIzMzZkZjU3LnBuZw">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Android Jetpack之AppCompat - Actionbar篇" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android Jetpack之AppCompat - Actionbar篇
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="article-date">
+	  <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Android/">Android</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>今天我们来聊一聊有关AppCompat，作为Android Jetpack系列文章的开篇。说到Android Jetpack，我们先看一下这张图：   </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC0zNTRjODMxNGIzMzZkZjU3LnBuZw" alt="Jetpack一览">   </p>
+<p>从图中我们可以看到，整个Android Jetpack分为了四大部分，而我们今天要讲述的就是Foundation中的AppCompat小节，官方将该部分翻译为“基础”。<br>Google官方网站：<br><a href="https://developer.android.com/jetpack" target="_blank" rel="noopener">https://developer.android.com/jetpack</a><br>按照Google官方的描述，AppCompat就是指v7 appcompat库。   </p>
+<blockquote>
+<p>“This library adds support for the Action Bar user interface design pattern. This library includes support for material design user interface implementations.”   </p>
+</blockquote>
+<p>意思是：此库添加了对操作栏用户界面设计模式的支持。这个库包括对Material Design用户界面实现的支持。也就是说，我们可以借助该库，对Material Design有更便捷和兼容性更好的实现。<br>进入AppCompat章节后，我们发现它又被分为了4个部分，这4个部分被称为“key class”，也就是重点类，它们分别是：   </p>
+<ul>
+<li>ActionBar：提供Actionbar用户界面模式的实现；  </li>
+<li>AppCompatActivity：添加可用作使用支持库操作栏实现的Activity的基类；  </li>
+<li>AppCompatDialog：添加一个可用作AppCompat主题的Dialog的基类;  </li>
+<li>ShareActionProvider：添加对可包含在ActionBar中的标准化共享操作（如电子邮件或发布到社交应用程序）的支持。  </li>
+</ul>
+<p>想要使用这些类，我们需要添加v7支持库。<br>到现在为止，支持库的最新版本是28，添加的库名称和版本如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.android.support:appcompat-v7:28.0.0</span><br></pre></td></tr></table></figure>
+
+<p>今天我们就先来聊一聊ActionBar，也是这里面最为复杂的一个部分。<br>依稀记得，伴随着Google I/O 2014的召开，早在Android 5.0的时代，Google 官方推出了ToolBar组件，在那之后，ToolBar就登上了历史舞台，扮演着重要的角色。之前我在CSDN上面也发表过相关主题的文章，因为发布的时机刚好是ToolBar登场之际，所以获得了很多的阅读量。快5年过去了，回头再看那几篇连载，感觉文笔很是稚嫩。今天借着讲述Jetpack，再次聊聊ToolBar那些事，相信你我都会有新的收获。  </p>
+<p><strong>首先解决疑问：</strong></p>
+<ol>
+<li><p>问：既然有了ActionBar，为何还要用ToolBar？ 答：使用AppCompat Toolbar能兼容更广泛的设备（ActionBar要求最低Android 3.0，ToolBar要求最低Android 2.1，但只有Android 5.0及以上才能在不使用AppCompat兼容包的前提下支持Material Design），以及各式各样的自定义需求。</p>
+</li>
+<li><p>问：ToolBar上面都应该包含哪些内容？ 答：根据Google的指导，应用栏区域应具备以下要素：1）一个专用区域，可以标识您的应用并指示用户在应用中的位置；2）以可预测的方式访问搜索等重要操作；3）支持导航和视图切换（通过标签页或下拉列表）。</p>
+</li>
+</ol>
+<p><strong>一、添加ToolBar</strong><br>想要添加一个ToolBar，总共3步走：<br>1.  更改application主题样式，操作对象：styles.xml。<br>对于新建的Android项目，AndroidManifest.xml中已经定义了所使用的theme，即：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:theme=&quot;@style/AppTheme&quot;</span><br></pre></td></tr></table></figure>
+
+<p>此时，我们修改styles.xml文件即可，将默认的继承值改掉，如下所示：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.NoActionBar&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>2. 在Activity布局中添加ToolBar，操作对象：layout布局文件  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v7.widget.Toolbar</span><br><span class="line">    android:id=&quot;@+id/activity_main_tb&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;?attr/actionBarSize&quot;</span><br><span class="line">    android:background=&quot;?attr/colorPrimary&quot;</span><br><span class="line">    android:elevation=&quot;4dp&quot;</span><br><span class="line">    android:theme=&quot;@style/ThemeOverlay.AppCompat.ActionBar&quot;</span><br><span class="line">    app:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>对高度掌握不好火候的同学，直接如上使用ActionBar的高度就可以了。<br>android:evevation指“仰角”，这部分知识请参考：<br><a href="https://developer.android.com/training/material/shadows-clipping" target="_blank" rel="noopener">https://developer.android.com/training/material/shadows-clipping</a><br>这里就不再赘述了。<br>如果你的项目已经迁移到Android X，你的布局文件代码片应该是：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;androidx.appcompat.widget.Toolbar</span><br><span class="line">    android:id=&quot;@+id/activity_main_tb&quot;</span><br><span class="line">    android:layout_width=&quot;match_parent&quot;</span><br><span class="line">    android:layout_height=&quot;?attr/actionBarSize&quot;</span><br><span class="line">    android:background=&quot;?attr/colorPrimary&quot;</span><br><span class="line">    android:elevation=&quot;4dp&quot;</span><br><span class="line">    android:theme=&quot;@style/ThemeOverlay.AppCompat.ActionBar&quot;</span><br><span class="line">    app:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>3. 在Activity类中找到ToolBar，并应用它，操作对象：Activity类<br>这一步并不复杂，参考普通的Android控件。类似地，我们通过findViewById()找到ToolBar，并做执行一些设定，即可完成该步骤，示例如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private Toolbar topTb;</span><br><span class="line">topTb = findViewById(R.id.activity_main_tb);        </span><br><span class="line">setSupportActionBar(topTb);</span><br></pre></td></tr></table></figure>
+
+<p>一旦我们setSupportActionBar()后，日后我们就可以通过getSupportActionBar()方法来获取ToolBar实例，也可以使用兼容包提供的ActionBar的各种API方法了。<br>到此，我们就完成了ToolBar的添加，还算简单吧？  </p>
+<p><strong>二、ToolBar外观的自定义</strong><br>不出意外的话，我们运行的结果将会和下图类似：  </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC0zNTI2ZGYxNjMzZDcwMmExLnBuZw" alt="默认的配色方案">   </p>
+<p>大绿底，大黑字，实在不怎么好看。<br>那么，如果我们想要自定义配色方案，该如何做呢？参考下图：  </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC01NDJjZmEwNzM4MmVjMzgxLmpwZw" alt="配色方案指导">  </p>
+<p>这些值我们都可以在color.xml中定义，并在styles.xml中引用。下图是一个重新定义配色方案后的截图：  </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC1jYjMxN2Y4YzA1ZGE5ZWY4LnBuZw" alt="自定义的配色方案">  </p>
+<p>相关的代码片：  </p>
+<p><strong>color.xml</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;color name=&quot;colorPrimary&quot;&gt;#002FA7&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;colorPrimaryDark&quot;&gt;#001F67&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;colorAccent&quot;&gt;#003FB7&lt;/color&gt;</span><br><span class="line">    &lt;color name=&quot;textColorPrimary&quot;&gt;#FFFFFF&lt;/color&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>styles.xml</strong>  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=&quot;AppTheme&quot; parent=&quot;Theme.AppCompat.Light.NoActionBar&quot;&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimary&quot;&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorPrimaryDark&quot;&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;colorAccent&quot;&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">    &lt;item name=&quot;android:textColorPrimary&quot;&gt;@color/textColorPrimary&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<p>细心的读者会发现，后面的截图中，右上角多了菜单项，这又是如何实现的呢？我们继续往后看。  </p>
+<p><strong>三、给ToolBar增加动作</strong><br>首先我们来看看如何给ToolBar增加菜单，我们依然分为3步完成。<br>1.  编写菜单xml文件，操作对象：menu文件夹下的菜单xml文件<br>这里我添加了两个菜单，如上图所示，一个隐藏在“更多”里，另一个是搜索。如下代码片所示：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</span><br><span class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;item</span><br><span class="line">        android:id=&quot;@+id/menu_main_info&quot;</span><br><span class="line">        android:title=&quot;@string/menu_main_activity_info&quot;</span><br><span class="line">        app:showAsAction=&quot;never&quot; /&gt;</span><br><span class="line"></span><br><span class="line">    &lt;item</span><br><span class="line">        android:id=&quot;@+id/menu_main_search&quot;</span><br><span class="line">        android:title=&quot;@string/menu_main_activity_search&quot;</span><br><span class="line">        app:actionViewClass=&quot;android.support.v7.widget.SearchView&quot;</span><br><span class="line">        app:showAsAction=&quot;always&quot; /&gt;</span><br><span class="line">&lt;/menu&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如上，我们可以看到有两个item，分别对应Info和搜索，我们使用”app:showAsAction”的值来控制这个菜单是否显示，常见的值有always，ifRoom，never。从字面上也很好理解，这里就不多解释了。   </p>
+<p>2. 接下来是Java代码片段：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">private SearchView tbSearchSv;</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public boolean onCreateOptionsMenu(Menu menu) &#123;</span><br><span class="line">    getMenuInflater().inflate(R.menu.main_activity_menu, menu);</span><br><span class="line">    MenuItem searchItem = menu.findItem(R.id.menu_main_search);</span><br><span class="line">    tbSearchSv = (SearchView) searchItem.getActionView();</span><br><span class="line">    return super.onCreateOptionsMenu(menu);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>细心的朋友会发现有这一行：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app:actionViewClass=&quot;android.support.v7.widget.SearchView&quot;</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">它是做什么的呢？  </span><br><span class="line"></span><br><span class="line">![搜索栏效果](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC1kNjNiMDRjYjcyYWNiNDBmLnBuZw)   </span><br><span class="line"></span><br><span class="line">对了！它就是搜索栏，是原生的搜索栏。所以某些情况下，这个搜索栏是不用自己去实现的，系统已经给我们提供了SearchView！  </span><br><span class="line">典型的APP：网易云音乐、知乎上方的搜索都是这样的。   </span><br><span class="line"></span><br><span class="line">3\. 为菜单设置监听器，我们先来看最普通的Info按钮，我们只需在Java代码中Override指定的方法就可以了，如下所示：</span><br></pre></td></tr></table></figure>
+
+<p>@Override<br>public boolean onOptionsItemSelected(MenuItem item) {<br>    switch (item.getItemId()) {<br>        case R.id.menu_main_info:<br>            Toast.makeText(MainActivity.this, R.string.menu_main_activity_info, Toast.LENGTH_LONG).show();<br>            break;<br>    }<br>    return super.onOptionsItemSelected(item);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">对于搜索栏，首先我们想到的是，如何获取用户输入的内容呢？  </span><br><span class="line">其实很简单，玄机在于SearchView，只需对SearchView添加监听器就可以了。</span><br></pre></td></tr></table></figure>
+
+<p>tbSearchSv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {<br>    @Override<br>    public boolean onQueryTextSubmit(String s) {</p>
+<pre><code>    return false;
+}
+
+@Override
+public boolean onQueryTextChange(String s) {
+
+    return false;
+}</code></pre><p>});</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这里要注意，设置监听器前，要确保SearchView（这里的tbSearchSv）已经被实例化，否则，会出现空指针异常崩溃。   </span><br><span class="line">关于SearchView，还有一写额外的设置，比如：</span><br></pre></td></tr></table></figure>
+
+<p>// 设置提交按钮是否可见（默认不可见）<br>tbSearchSv.setSubmitButtonEnabled(true);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![提交按钮是否可见](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC1jYWQyNDA4MThlZGZkOTMwLnBuZw)</span><br></pre></td></tr></table></figure>
+
+<p>// 设置左侧是否显示搜索图标（默认不可见）<br>tbSearchSv.setIconifiedByDefault(false);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">![左侧是否显示搜索图标](https://imgconvert.csdnimg.cn/aHR0cDovL3VwbG9hZC1pbWFnZXMuamlhbnNodS5pby91cGxvYWRfaW1hZ2VzLzk0MDY5MC0yMTAzODEyMzQzMWE5OGU4LnBuZw)    </span><br><span class="line">更多可使用的API请参考官方文档：</span><br><span class="line">https://developer.android.google.cn/reference/android/widget/SearchView  </span><br><span class="line"></span><br><span class="line">不过，我们这里还需要做最后一点善后。如果你是一路下来照着本篇文章敲代码的话，在搜索框打开的情况下按一下返回键，你期待的是什么？是不是取消搜索操作，停留在当前界面？然而实际上是……退出了APP。   </span><br><span class="line">所以我们这里要对返回键的默认动作做一个“拦截”，具体可参考如下代码片：</span><br></pre></td></tr></table></figure>
+
+<p>@Override<br>public boolean onKeyUp(int keyCode, KeyEvent event) {<br>    switch (keyCode) {<br>        case KeyEvent.KEYCODE_BACK:<br>            if (!tbSearchSv.isIconified()) {<br>                tbSearchSv.setIconified(true);<br>                return true;<br>            }<br>            break;<br>    }<br>    return super.onKeyUp(keyCode, event);<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这里SearchView的isIconfied()方法可以返回当前的SearchView展开状态。  </span><br><span class="line"></span><br><span class="line">**四、返回上一层**   </span><br><span class="line"></span><br><span class="line">ToolBar还有一个比较常见的功能就是左上角的返回按钮，提供返回上一层操作，很多的APP开发者都习惯于自定义一个ImageButton或类似的空间，然后使用美工提供的图像素材，设置监听器，写Selector……一套下来，费时费力。  </span><br><span class="line">其实Google已经为开发者提供了现成的非常易用的返回逻辑处理。要实现这些处理，两步就搞定了。  </span><br><span class="line"></span><br><span class="line">1\. 在ToolBar对象上启用返回钮</span><br></pre></td></tr></table></figure>
+
+<p>getSupportActionBar().setDisplayHomeAsUpEnabled(true);</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这里注意，虽然之前将ToolBar通过setSupportActionBar()方式当做参数被set了一次，但是ToolBar类本身并不提供setDisplayHomeAsUpEnabled()方法，因此，我们还需要getSupportActionBar()，先获取ActionBar对象，然后使用该对象，而不是直接使用ToolBar对象。  </span><br><span class="line"></span><br><span class="line">2\. 在AndroidManifest.xml中定义要跳转的Activity  </span><br><span class="line">如题，我们在AndroidManifest.xml中，对子Activity做处理，这里不要忘记兼容低版本的系统。</span><br></pre></td></tr></table></figure>
+
+<p><activity android:name=".MainActivity" android:parentactivityname=".SecondActivity"><br>    <!-- 兼容 Android4.0 及以下版本--><br>    <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".SecondActivity"><br></meta-data></activity><br>```</p>
+<p>将SecondActivity改为入口Activity，然后重新运行程序，将实现如下效果：  </p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy85NDA2OTAtMWJmZDM2NDg0NTczMzg1Zi5naWY" alt="返回键视频演示">   </p>
+<p>到此，关于ToolBar常见用法的梳理告一段落。源码请自取：<br><a href="https://github.com/wh1990xiao2005/JetpackDemo" target="_blank" rel="noopener">https://github.com/wh1990xiao2005/JetpackDemo</a>    </p>
+<p>我会在接下来的文章中，和大家分享关于ToolBar的剩余内容，以及AppCompat兼容包中的其他知识，希望对你我都有帮助。<br>共勉！</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" title="Android Jetpack之AppCompat - Actionbar篇" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/07/02/身为程序员，你焦虑吗/" title="身为程序员，你焦虑吗"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" title="抓出卡顿元凶，从分析掉帧开始"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>

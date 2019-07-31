@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>Android 5.0(L) ToolBar(替代ActionBar) 实战（三） | 萧爷代码实验室</title>
+  <meta name="description" content="《代码大全》一书中提到：当我们编程时，不要简单停留在“在一种编程语言上进行编程”，而是要“深入一种语言”编程。在前面两篇文章中，虽然初步实现了ViewPager+Tab的布局，但实际上还是有一些不足的。让我们把目光锁定在Tab： 可以发现，3个Tab加一起的宽度并没有填充屏幕整个宽度。实际上，Google这样的设计是为了应对多Tab的情形，当Tab总宽度超出屏幕宽度的时候，用户可以简单地通过滑动T">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 5.0(L) ToolBar(替代ActionBar) 实战（三）">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="《代码大全》一书中提到：当我们编程时，不要简单停留在“在一种编程语言上进行编程”，而是要“深入一种语言”编程。在前面两篇文章中，虽然初步实现了ViewPager+Tab的布局，但实际上还是有一些不足的。让我们把目光锁定在Tab： 可以发现，3个Tab加一起的宽度并没有填充屏幕整个宽度。实际上，Google这样的设计是为了应对多Tab的情形，当Tab总宽度超出屏幕宽度的时候，用户可以简单地通过滑动T">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20141101131904159?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20141101143436171?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2019-07-31T01:49:11.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 5.0(L) ToolBar(替代ActionBar) 实战（三）">
+<meta name="twitter:description" content="《代码大全》一书中提到：当我们编程时，不要简单停留在“在一种编程语言上进行编程”，而是要“深入一种语言”编程。在前面两篇文章中，虽然初步实现了ViewPager+Tab的布局，但实际上还是有一些不足的。让我们把目光锁定在Tab： 可以发现，3个Tab加一起的宽度并没有填充屏幕整个宽度。实际上，Google这样的设计是为了应对多Tab的情形，当Tab总宽度超出屏幕宽度的时候，用户可以简单地通过滑动T">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20141101131904159?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/wh1990xiao2005" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Tianjin, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>萧爷代码实验室 重装上阵</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.5px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.5px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.5px;">其他</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/03/11/Android Jetpack之AppCompat - Actionbar篇/" class="title">Android Jetpack之AppCompat - Actionbar篇</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-03-11T14:05:21.000Z" itemprop="datePublished">2019-03-11</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/25/抓出卡顿元凶，从分析掉帧开始/" class="title">抓出卡顿元凶，从分析掉帧开始</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-25T02:23:48.000Z" itemprop="datePublished">2019-02-25</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/20/粮草先行——Android折叠屏开发技术点（二）/" class="title">粮草先行——Android折叠屏开发技术点（二）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-20T09:56:10.000Z" itemprop="datePublished">2019-02-20</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2019/02/14/粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则/" class="title">粮草先行——Android折叠屏开发技术点番外篇之运行时变更处理原则</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-02-14T03:33:28.000Z" itemprop="datePublished">2019-02-14</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Android 5.0(L) ToolBar(替代ActionBar) 实战（三）" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android 5.0(L) ToolBar(替代ActionBar) 实战（三）
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/" class="article-date">
+	  <time datetime="2014-11-01T06:35:44.000Z" itemprop="datePublished">2014-11-01</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/Android/">Android</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>《代码大全》一书中提到：当我们编程时，不要简单停留在“在一种编程语言上进行编程”，而是要“深入一种语言”编程。在前面两篇文章中，虽然初步实现了ViewPager+Tab的布局，但实际上还是有一些不足的。让我们把目光锁定在Tab：<br><img src="https://img-blog.csdn.net/20141101131904159?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Tab标签样式"></p>
+<p>可以发现，3个Tab加一起的宽度并没有填充屏幕整个宽度。实际上，Google这样的设计是为了应对多Tab的情形，当Tab总宽度超出屏幕宽度的时候，用户可以简单地通过滑动Tab看到后面未显示出来的Tab。这种情况其实还是比较多见的，比如众多的新闻阅读客户端和Google原生应用等等。<br>但是如果我们只有三个Tab，甚至只有两个Tab，想让整个Tab的宽度等于屏幕宽度，该如何做呢？第一反应自然是要略微折腾一下SlidingTabLayout.java的源码了。<br>经过研究发现，实际上如上图顶部Tab的实现通过HorizontalScrollView，然后add了一个又一个的view，这个View就是每个Tab的标题，而整个SlidingTabLayout是继承了HorizontalScrollView。<br>接下来的思路就很清晰了：首先获取屏幕的总宽度，然后传给SlidingTabLayout对象，在其类内部对每个Tab所占的宽度进行计算和分配，最后将每个Tab标题的视图add到HorizontalScrollView就OK了。<br>首先获取屏幕的宽度。这一操作我们在MainActivity中进行，下面列出这一段程序清单：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 获取屏幕宽度</span><br><span class="line">private int caculateScreenX() &#123;</span><br><span class="line">	return getResources().getDisplayMetrics().widthPixels;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>获取到屏幕宽度之后，接下来就是把这个值传递给SlidingTabLayout。回顾一下用法，上一篇文章里面提到，我们在添加Tab导航栏的时候，仅仅是实例化了SlidingTabLayout的对象，然后调用了setViewPager()方法而已。那么，我们不妨在该方法上面添加一个参数，用来传递屏幕宽度。当然，我们需要在SlidingTabLayout中声明一个全局的int变量，用来存放每个Tab的宽度值：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public void setViewPager(ViewPager viewPager, int screenX) &#123;</span><br><span class="line">    this.screenX = screenX / viewPager.viewPager.getAdapter().getCount();</span><br><span class="line">    mTabStrip.removeAllViews();</span><br><span class="line">    mViewPager = viewPager;</span><br><span class="line">    if (viewPager != null) &#123;</span><br><span class="line">        viewPager.setOnPageChangeListener(new InternalViewPagerListener());</span><br><span class="line">        populateTabStrip();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>跟随该方法，找到populateTabStrip()方法，可以看到其中通过一个for循环以此添加了各个Tab视图。而每个Tab视图均通过createDefaultTabView()方法创建，因此该方法最为关键。<br>找到这个方法之后我们发现，每个Tab的标题View实际上是TextView，那么我们只需将每个TextView的宽度制定为刚刚计算出来的screenX（每个Tab的宽度）即可。具体可参看下面的代码清单：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">protected TextView createDefaultTabView(Context context) &#123;</span><br><span class="line">    TextView textView = new TextView(context);</span><br><span class="line">	textView.setGravity(Gravity.CENTER);</span><br><span class="line">	textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);</span><br><span class="line">	textView.setTypeface(Typeface.DEFAULT_BOLD);		textView.setWidth(screenX);</span><br><span class="line"> </span><br><span class="line">	if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) &#123;</span><br><span class="line">		// If we&apos;re running on Honeycomb or newer, then we can use the</span><br><span class="line">		// Theme&apos;s</span><br><span class="line">		// selectableItemBackground to ensure that the View has a pressed</span><br><span class="line">		// state</span><br><span class="line">		TypedValue outValue = new TypedValue();</span><br><span class="line">		getContext().getTheme().resolveAttribute(</span><br><span class="line">					android.R.attr.selectableItemBackground, outValue, true);</span><br><span class="line">		textView.setBackgroundResource(outValue.resourceId);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.ICE_CREAM_SANDWICH) &#123;</span><br><span class="line">		// If we&apos;re running on ICS or newer, enable all-caps to match the</span><br><span class="line">		// Action Bar tab style</span><br><span class="line">		textView.setAllCaps(true);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources()</span><br><span class="line">				.getDisplayMetrics().density);</span><br><span class="line">	textView.setPadding(padding, padding, padding, padding);</span><br><span class="line"> </span><br><span class="line">	return textView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后，我们修改MainActivity，把计算好的屏幕宽度传给SlidingTabLayout，Ctrl+F11看看效果吧！   </p>
+<p><img src="https://img-blog.csdn.net/20141101143436171?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveHdobmV3/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="等分的Tab样式"></p>
+<p>不出意外的话，看到上图就说明已经成功了！<br>下面放上整个SlidingTabLayout修改后的类：   </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright (C) 2013 The Android Open Source Project</span><br><span class="line"> *</span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *</span><br><span class="line"> *      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *</span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span><br><span class="line"> </span><br><span class="line">package com.xwh.toolbardemo.view;</span><br><span class="line"> </span><br><span class="line">import android.annotation.SuppressLint;</span><br><span class="line">import android.content.Context;</span><br><span class="line">import android.graphics.Typeface;</span><br><span class="line">import android.os.Build;</span><br><span class="line">import android.support.v4.view.PagerAdapter;</span><br><span class="line">import android.support.v4.view.ViewPager;</span><br><span class="line">import android.util.AttributeSet;</span><br><span class="line">import android.util.Log;</span><br><span class="line">import android.util.TypedValue;</span><br><span class="line">import android.view.Gravity;</span><br><span class="line">import android.view.LayoutInflater;</span><br><span class="line">import android.view.View;</span><br><span class="line">import android.widget.HorizontalScrollView;</span><br><span class="line">import android.widget.TextView;</span><br><span class="line"> </span><br><span class="line">/**</span><br><span class="line"> * To be used with ViewPager to provide a tab indicator component which give</span><br><span class="line"> * constant feedback as to the user&apos;s scroll progress.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * To use the component, simply add it to your view hierarchy. Then in your</span><br><span class="line"> * &#123;@link android.app.Activity&#125; or &#123;@link android.support.v4.app.Fragment&#125; call</span><br><span class="line"> * &#123;@link #setViewPager(ViewPager)&#125; providing it the ViewPager this layout is</span><br><span class="line"> * being used for.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * The colors can be customized in two ways. The first and simplest is to</span><br><span class="line"> * provide an array of colors via &#123;@link #setSelectedIndicatorColors(int...)&#125;</span><br><span class="line"> * and &#123;@link #setDividerColors(int...)&#125;. The alternative is via the</span><br><span class="line"> * &#123;@link TabColorizer&#125; interface which provides you complete control over which</span><br><span class="line"> * color is used for any individual position.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * The views used as tabs can be customized by calling</span><br><span class="line"> * &#123;@link #setCustomTabView(int, int)&#125;, providing the layout ID of your custom</span><br><span class="line"> * layout.</span><br><span class="line"> */</span><br><span class="line">public class SlidingTabLayout extends HorizontalScrollView &#123;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Allows complete control over the colors drawn in the tab layout. Set with</span><br><span class="line">	 * &#123;@link #setCustomTabColorizer(TabColorizer)&#125;.</span><br><span class="line">	 */</span><br><span class="line">	public interface TabColorizer &#123;</span><br><span class="line"> </span><br><span class="line">		/**</span><br><span class="line">		 * @return return the color of the indicator used when &#123;@code position&#125;</span><br><span class="line">		 *         is selected.</span><br><span class="line">		 */</span><br><span class="line">		int getIndicatorColor(int position);</span><br><span class="line"> </span><br><span class="line">		/**</span><br><span class="line">		 * @return return the color of the divider drawn to the right of</span><br><span class="line">		 *         &#123;@code position&#125;.</span><br><span class="line">		 */</span><br><span class="line">		int getDividerColor(int position);</span><br><span class="line"> </span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	private static final int TITLE_OFFSET_DIPS = 24;</span><br><span class="line">	private static final int TAB_VIEW_PADDING_DIPS = 16;</span><br><span class="line">	private static final int TAB_VIEW_TEXT_SIZE_SP = 12;</span><br><span class="line"> </span><br><span class="line">	private int mTitleOffset;</span><br><span class="line"> </span><br><span class="line">	private int mTabViewLayoutId;</span><br><span class="line">	private int mTabViewTextViewId;</span><br><span class="line"> </span><br><span class="line">	private ViewPager mViewPager;</span><br><span class="line">	private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;</span><br><span class="line"> </span><br><span class="line">	private final SlidingTabStrip mTabStrip;</span><br><span class="line"> </span><br><span class="line">	private int screenX;</span><br><span class="line"> </span><br><span class="line">	public SlidingTabLayout(Context context) &#123;</span><br><span class="line">		this(context, null);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	public SlidingTabLayout(Context context, AttributeSet attrs) &#123;</span><br><span class="line">		this(context, attrs, 0);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	public SlidingTabLayout(Context context, AttributeSet attrs, int defStyle) &#123;</span><br><span class="line">		super(context, attrs, defStyle);</span><br><span class="line"> </span><br><span class="line">		// Disable the Scroll Bar</span><br><span class="line">		setHorizontalScrollBarEnabled(false);</span><br><span class="line">		// Make sure that the Tab Strips fills this View</span><br><span class="line">		setFillViewport(true);</span><br><span class="line"> </span><br><span class="line">		mTitleOffset = (int) (TITLE_OFFSET_DIPS * getResources()</span><br><span class="line">				.getDisplayMetrics().density);</span><br><span class="line"> </span><br><span class="line">		mTabStrip = new SlidingTabStrip(context);</span><br><span class="line">		addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Set the custom &#123;@link TabColorizer&#125; to be used.</span><br><span class="line">	 * </span><br><span class="line">	 * If you only require simple custmisation then you can use</span><br><span class="line">	 * &#123;@link #setSelectedIndicatorColors(int...)&#125; and</span><br><span class="line">	 * &#123;@link #setDividerColors(int...)&#125; to achieve similar effects.</span><br><span class="line">	 */</span><br><span class="line">	public void setCustomTabColorizer(TabColorizer tabColorizer) &#123;</span><br><span class="line">		mTabStrip.setCustomTabColorizer(tabColorizer);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Sets the colors to be used for indicating the selected tab. These colors</span><br><span class="line">	 * are treated as a circular array. Providing one color will mean that all</span><br><span class="line">	 * tabs are indicated with the same color.</span><br><span class="line">	 */</span><br><span class="line">	public void setSelectedIndicatorColors(int... colors) &#123;</span><br><span class="line">		mTabStrip.setSelectedIndicatorColors(colors);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Sets the colors to be used for tab dividers. These colors are treated as</span><br><span class="line">	 * a circular array. Providing one color will mean that all tabs are</span><br><span class="line">	 * indicated with the same color.</span><br><span class="line">	 */</span><br><span class="line">	public void setDividerColors(int... colors) &#123;</span><br><span class="line">		mTabStrip.setDividerColors(colors);</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Set the &#123;@link ViewPager.OnPageChangeListener&#125;. When using</span><br><span class="line">	 * &#123;@link SlidingTabLayout&#125; you are required to set any</span><br><span class="line">	 * &#123;@link ViewPager.OnPageChangeListener&#125; through this method. This is so</span><br><span class="line">	 * that the layout can update it&apos;s scroll position correctly.</span><br><span class="line">	 * </span><br><span class="line">	 * @see ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)</span><br><span class="line">	 */</span><br><span class="line">	public void setOnPageChangeListener(ViewPager.OnPageChangeListener listener) &#123;</span><br><span class="line">		mViewPagerPageChangeListener = listener;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Set the custom layout to be inflated for the tab views.</span><br><span class="line">	 * </span><br><span class="line">	 * @param layoutResId</span><br><span class="line">	 *            Layout id to be inflated</span><br><span class="line">	 * @param textViewId</span><br><span class="line">	 *            id of the &#123;@link TextView&#125; in the inflated view</span><br><span class="line">	 */</span><br><span class="line">	public void setCustomTabView(int layoutResId, int textViewId) &#123;</span><br><span class="line">		mTabViewLayoutId = layoutResId;</span><br><span class="line">		mTabViewTextViewId = textViewId;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Sets the associated view pager. Note that the assumption here is that the</span><br><span class="line">	 * pager content (number of tabs and tab titles) does not change after this</span><br><span class="line">	 * call has been made.</span><br><span class="line">	 */</span><br><span class="line">	public void setViewPager(ViewPager viewPager, int screenX) &#123;</span><br><span class="line">		this.screenX = (screenX / viewPager.getAdapter().getCount());</span><br><span class="line">		mTabStrip.removeAllViews();</span><br><span class="line"> </span><br><span class="line">		mViewPager = viewPager;</span><br><span class="line">		if (viewPager != null) &#123;</span><br><span class="line">			viewPager.setOnPageChangeListener(new InternalViewPagerListener());</span><br><span class="line">			populateTabStrip();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	/**</span><br><span class="line">	 * Create a default view to be used for tabs. This is called if a custom tab</span><br><span class="line">	 * view is not set via &#123;@link #setCustomTabView(int, int)&#125;.</span><br><span class="line">	 */</span><br><span class="line">	@SuppressLint(&quot;NewApi&quot;)</span><br><span class="line">	protected TextView createDefaultTabView(Context context) &#123;</span><br><span class="line">		TextView textView = new TextView(context);</span><br><span class="line">		textView.setGravity(Gravity.CENTER);</span><br><span class="line">		textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, TAB_VIEW_TEXT_SIZE_SP);</span><br><span class="line">		textView.setTypeface(Typeface.DEFAULT_BOLD);</span><br><span class="line">		textView.setWidth(screenX);</span><br><span class="line"> </span><br><span class="line">		if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.HONEYCOMB) &#123;</span><br><span class="line">			// If we&apos;re running on Honeycomb or newer, then we can use the</span><br><span class="line">			// Theme&apos;s</span><br><span class="line">			// selectableItemBackground to ensure that the View has a pressed</span><br><span class="line">			// state</span><br><span class="line">			TypedValue outValue = new TypedValue();</span><br><span class="line">			getContext().getTheme().resolveAttribute(</span><br><span class="line">					android.R.attr.selectableItemBackground, outValue, true);</span><br><span class="line">			textView.setBackgroundResource(outValue.resourceId);</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">		if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.ICE_CREAM_SANDWICH) &#123;</span><br><span class="line">			// If we&apos;re running on ICS or newer, enable all-caps to match the</span><br><span class="line">			// Action Bar tab style</span><br><span class="line">			textView.setAllCaps(true);</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">		int padding = (int) (TAB_VIEW_PADDING_DIPS * getResources()</span><br><span class="line">				.getDisplayMetrics().density);</span><br><span class="line">		textView.setPadding(padding, padding, padding, padding);</span><br><span class="line"> </span><br><span class="line">		return textView;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	private void populateTabStrip() &#123;</span><br><span class="line">		final PagerAdapter adapter = mViewPager.getAdapter();</span><br><span class="line">		final View.OnClickListener tabClickListener = new TabClickListener();</span><br><span class="line"> </span><br><span class="line">		for (int i = 0; i &lt; adapter.getCount(); i++) &#123;</span><br><span class="line">			View tabView = null;</span><br><span class="line">			TextView tabTitleView = null;</span><br><span class="line"> </span><br><span class="line">			if (mTabViewLayoutId != 0) &#123;</span><br><span class="line">				// If there is a custom tab view layout id set, try and inflate</span><br><span class="line">				// it</span><br><span class="line">				tabView = LayoutInflater.from(getContext()).inflate(</span><br><span class="line">						mTabViewLayoutId, mTabStrip, false);</span><br><span class="line">				tabTitleView = (TextView) tabView</span><br><span class="line">						.findViewById(mTabViewTextViewId);</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">			if (tabView == null) &#123;</span><br><span class="line">				tabView = createDefaultTabView(getContext());</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">			if (tabTitleView == null &amp;&amp; TextView.class.isInstance(tabView)) &#123;</span><br><span class="line">				tabTitleView = (TextView) tabView;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">			tabTitleView.setText(adapter.getPageTitle(i));</span><br><span class="line">			tabView.setOnClickListener(tabClickListener);</span><br><span class="line"> </span><br><span class="line">			mTabStrip.addView(tabView);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	@Override</span><br><span class="line">	protected void onAttachedToWindow() &#123;</span><br><span class="line">		super.onAttachedToWindow();</span><br><span class="line"> </span><br><span class="line">		if (mViewPager != null) &#123;</span><br><span class="line">			scrollToTab(mViewPager.getCurrentItem(), 0);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	private void scrollToTab(int tabIndex, int positionOffset) &#123;</span><br><span class="line">		final int tabStripChildCount = mTabStrip.getChildCount();</span><br><span class="line">		if (tabStripChildCount == 0 || tabIndex &lt; 0</span><br><span class="line">				|| tabIndex &gt;= tabStripChildCount) &#123;</span><br><span class="line">			return;</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">		View selectedChild = mTabStrip.getChildAt(tabIndex);</span><br><span class="line">		if (selectedChild != null) &#123;</span><br><span class="line">			int targetScrollX = selectedChild.getLeft() + positionOffset;</span><br><span class="line"> </span><br><span class="line">			if (tabIndex &gt; 0 || positionOffset &gt; 0) &#123;</span><br><span class="line">				// If we&apos;re not at the first child and are mid-scroll, make sure</span><br><span class="line">				// we obey the offset</span><br><span class="line">				targetScrollX -= mTitleOffset;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">			scrollTo(targetScrollX, 0);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	private class InternalViewPagerListener implements</span><br><span class="line">			ViewPager.OnPageChangeListener &#123;</span><br><span class="line">		private int mScrollState;</span><br><span class="line"> </span><br><span class="line">		@Override</span><br><span class="line">		public void onPageScrolled(int position, float positionOffset,</span><br><span class="line">				int positionOffsetPixels) &#123;</span><br><span class="line">			int tabStripChildCount = mTabStrip.getChildCount();</span><br><span class="line">			if ((tabStripChildCount == 0) || (position &lt; 0)</span><br><span class="line">					|| (position &gt;= tabStripChildCount)) &#123;</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">			mTabStrip.onViewPagerPageChanged(position, positionOffset);</span><br><span class="line"> </span><br><span class="line">			View selectedTitle = mTabStrip.getChildAt(position);</span><br><span class="line">			int extraOffset = (selectedTitle != null) ? (int) (positionOffset * selectedTitle</span><br><span class="line">					.getWidth()) : 0;</span><br><span class="line">			scrollToTab(position, extraOffset);</span><br><span class="line"> </span><br><span class="line">			if (mViewPagerPageChangeListener != null) &#123;</span><br><span class="line">				mViewPagerPageChangeListener.onPageScrolled(position,</span><br><span class="line">						positionOffset, positionOffsetPixels);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">		@Override</span><br><span class="line">		public void onPageScrollStateChanged(int state) &#123;</span><br><span class="line">			mScrollState = state;</span><br><span class="line"> </span><br><span class="line">			if (mViewPagerPageChangeListener != null) &#123;</span><br><span class="line">				mViewPagerPageChangeListener.onPageScrollStateChanged(state);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">		@Override</span><br><span class="line">		public void onPageSelected(int position) &#123;</span><br><span class="line">			if (mScrollState == ViewPager.SCROLL_STATE_IDLE) &#123;</span><br><span class="line">				mTabStrip.onViewPagerPageChanged(position, 0f);</span><br><span class="line">				scrollToTab(position, 0);</span><br><span class="line">			&#125;</span><br><span class="line"> </span><br><span class="line">			if (mViewPagerPageChangeListener != null) &#123;</span><br><span class="line">				mViewPagerPageChangeListener.onPageSelected(position);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"> </span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">	private class TabClickListener implements View.OnClickListener &#123;</span><br><span class="line">		@Override</span><br><span class="line">		public void onClick(View v) &#123;</span><br><span class="line">			for (int i = 0; i &lt; mTabStrip.getChildCount(); i++) &#123;</span><br><span class="line">				if (v == mTabStrip.getChildAt(i)) &#123;</span><br><span class="line">					mViewPager.setCurrentItem(i);</span><br><span class="line">					return;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这一篇到此结束。下一篇将讨论菜单的添加和关于ToolBar的更多精彩用法。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（三）" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2014/11/01/Android 5.0(L) ToolBar(替代ActionBar) 实战（三）/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/wh1990xiao2005" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/wh1990xiao2005" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2014/11/05/Android 5.0(L) ToolBar(替代ActionBar) 实战（四）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（四）"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2014/10/31/Android 5.0(L) ToolBar(替代ActionBar) 实战（二）/" title="Android 5.0(L) ToolBar(替代ActionBar) 实战（二）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qq,weibo" data-mobile-sites="wechat,weibo,qq"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
