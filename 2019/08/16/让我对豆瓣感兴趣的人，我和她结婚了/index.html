@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000">
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top">
+  
+  
+  <title>让我对豆瓣感兴趣的人，我和她结婚了 | 萧爷代码实验室</title>
+  <meta name="description" content="引子2011年8月15日，我注册了豆瓣账号，成为了豆瓣网的注册用户。那一年，我们在同一所大学，读着同样的专业，在同一个班。2019年8月15日，我习惯性地打开豆瓣App，看到启动闪屏。不由感叹，时间好快，一转眼8年过去了。而那个让我对豆瓣网感兴趣的姑娘，我们也终于结发为夫妻了。     一2019年8月15日，我习惯性地打开豆瓣App，闪屏也出现注册8年的动图，不由想起了8年前来到豆瓣的缘由。8年">
+<meta name="keywords" content="闲情记趣">
+<meta property="og:type" content="article">
+<meta property="og:title" content="让我对豆瓣感兴趣的人，我和她结婚了">
+<meta property="og:url" content="http://www.xiaowenhan.com.cn/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/index.html">
+<meta property="og:site_name" content="萧爷代码实验室">
+<meta property="og:description" content="引子2011年8月15日，我注册了豆瓣账号，成为了豆瓣网的注册用户。那一年，我们在同一所大学，读着同样的专业，在同一个班。2019年8月15日，我习惯性地打开豆瓣App，看到启动闪屏。不由感叹，时间好快，一转眼8年过去了。而那个让我对豆瓣网感兴趣的姑娘，我们也终于结发为夫妻了。     一2019年8月15日，我习惯性地打开豆瓣App，闪屏也出现注册8年的动图，不由想起了8年前来到豆瓣的缘由。8年">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(1).jpg">
+<meta property="og:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(2).jpg">
+<meta property="og:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(3).jpeg">
+<meta property="og:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(4).jpg">
+<meta property="og:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(5).png">
+<meta property="og:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(6).jpg">
+<meta property="og:updated_time" content="2019-08-19T07:26:49.741Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="让我对豆瓣感兴趣的人，我和她结婚了">
+<meta name="twitter:description" content="引子2011年8月15日，我注册了豆瓣账号，成为了豆瓣网的注册用户。那一年，我们在同一所大学，读着同样的专业，在同一个班。2019年8月15日，我习惯性地打开豆瓣App，看到启动闪屏。不由感叹，时间好快，一转眼8年过去了。而那个让我对豆瓣网感兴趣的姑娘，我们也终于结发为夫妻了。     一2019年8月15日，我习惯性地打开豆瓣App，闪屏也出现注册8年的动图，不由想起了8年前来到豆瓣的缘由。8年">
+<meta name="twitter:image" content="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(1).jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://www.xiaowenhan.com.cn/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="萧爷代码实验室" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+  
+  
+  
+</head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="about" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">萧文翰</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">资深移动开发架构师</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> 中国 天津市</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="在这里搜索" x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">联系我</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>写有态度的文章；过有品质的生活。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/摄影作品/">摄影作品</a><span class="category-list-count">22</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/编程世界/">编程世界</a><span class="category-list-count">33</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/聊聊人生/">聊聊人生</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/自媒体运营/">自媒体运营</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲情记趣/">闲情记趣</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Java/" style="font-size: 13.25px;">Java</a> <a href="/tags/React-Native/" style="font-size: 13px;">React Native</a> <a href="/tags/Web/" style="font-size: 13.25px;">Web</a> <a href="/tags/人生杂谈/" style="font-size: 13px;">人生杂谈</a> <a href="/tags/其他/" style="font-size: 13.25px;">其他</a> <a href="/tags/兼职/" style="font-size: 13px;">兼职</a> <a href="/tags/旧时光/" style="font-size: 13px;">旧时光</a> <a href="/tags/观世界/" style="font-size: 13.5px;">观世界</a> <a href="/tags/闲情记趣/" style="font-size: 13px;">闲情记趣</a> <a href="/tags/随手拍/" style="font-size: 13.75px;">随手拍</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/自媒体运营/">自媒体运营</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/08/19/我是如何赚到第一笔兼职收入的/" class="title">我是如何赚到第一笔兼职收入的</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-08-19T06:50:49.000Z" itemprop="datePublished">2019-08-19</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/闲情记趣/">闲情记趣</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/" class="title">让我对豆瓣感兴趣的人，我和她结婚了</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-08-16T04:17:49.000Z" itemprop="datePublished">2019-08-16</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/摄影作品/">摄影作品</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/08/01/津城随手拍合集/" class="title">津城随手拍合集</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-08-01T06:11:27.000Z" itemprop="datePublished">2019-08-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/聊聊人生/">聊聊人生</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/07/02/身为程序员，你焦虑吗/" class="title">身为程序员，你焦虑吗</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-07-02T10:56:15.000Z" itemprop="datePublished">2019-07-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/摄影作品/">摄影作品</a>
+              </p>
+              <p class="item-title">
+                <a href="/2019/05/10/无题/" class="title">无题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2019-05-10T11:10:49.000Z" itemprop="datePublished">2019-05-10</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">三月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-让我对豆瓣感兴趣的人，我和她结婚了" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      让我对豆瓣感兴趣的人，我和她结婚了
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/" class="article-date">
+	  <time datetime="2019-08-16T04:17:49.000Z" itemprop="datePublished">2019-08-16</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/闲情记趣/">闲情记趣</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/闲情记趣/">闲情记趣</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>2011年8月15日，我注册了豆瓣账号，成为了豆瓣网的注册用户。<br>那一年，我们在同一所大学，读着同样的专业，在同一个班。<br>2019年8月15日，我习惯性地打开豆瓣App，看到启动闪屏。不由感叹，时间好快，一转眼8年过去了。<br>而那个让我对豆瓣网感兴趣的姑娘，我们也终于结发为夫妻了。   </p>
+<p><img src="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(1).jpg" alt="豆瓣八周年"></p>
+<h2 id="一"><a href="#一" class="headerlink" title="一"></a>一</h2><p>2019年8月15日，我习惯性地打开豆瓣App，闪屏也出现注册8年的动图，不由想起了8年前来到豆瓣的缘由。<br>8年前，我们还都在天津读大学，她是一个来自广州的南方姑娘。看上去温柔又可爱，让我对她产生了莫名的好感，于是很是关注她的QQ空间动态。某一天，看到她发表状态，大概意思就是以后不再沉迷于豆瓣之类。我心里好奇怪，豆瓣到底有多么大的吸引力，能够让她沉迷其中呢？<br>怀着好奇的心情我打开了豆瓣，觉得内容还不错，找书找电影找音乐都很方便，别人的评论也值得参考，于是便在那时注册了一个豆瓣账号，从此开始了我的豆瓣生涯。<br>8年过去了，本来想给她一个惊喜，告诉她整个事情。然而当她启动豆瓣App时，显示的闪屏动图却首先惊喜到了我。   </p>
+<p><img src="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(2).jpg" alt="豆瓣九周年"></p>
+<p>原来，我们是在同月同日注册的，只是她比我早到一年。<br>这般巧合让我们不由感叹，冥冥之中自有天意。    </p>
+<h2 id="二"><a href="#二" class="headerlink" title="二"></a>二</h2><p>2009年高中毕业，我们一同被天津师范大学录取，成为同班同学。在做自我介绍的时候，我留意到她。<br>那个时候的她，讲着略带广东腔的普通话，说话时略显羞涩。记忆最深的就是那句：“如果有人想学粤语可以找我。”话罢，同学们还发出惊呼。就在那时，我便记住她了。   </p>
+<p><img src="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(3).jpeg" alt="18岁的她"></p>
+<p>和那些比较狗血的程序员故事一样，学生时代的我们唯一的交集就是我帮忙给她修电脑。<br>据我现在的回忆，总共修电脑至少3次，在线解答问题不确定多少次。甚至到了毕业多年之后，我们的交集仍然是和电脑相关的话题。<br>为此，我还特意做了一份手账，可能略显粗糙。     </p>
+<p><img src="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(4).jpg" alt="重逢之前">  </p>
+<p>这篇手账名为重逢之前。<br>是的，从2013年毕业后，我们就住在不同的城市。从天津到广州，2000多公里。<br>地理上的距离似乎也拉远了我们之间本来就不近的距离，那个让我有好感的姑娘，更是随着时间的流逝，渐渐地越走越远了。    </p>
+<h2 id="三"><a href="#三" class="headerlink" title="三"></a>三</h2><p>网上很多文章，讲述了很多毕业就分手的例子，毕业季=分手季。然而这对我们而言，丝毫没有影响，因为我们并没有开始。<br>2013年，隐约记得也是夏季。那个时候我刚毕业，和豆瓣的交集就是在读书学习的时候打开豆瓣FM，在买书之前看看书评，在买CD之前看看碟评。<br>某一日晚上下班，和同事坐地铁。突然电话铃响，手机上赫然显示着她的名字，我接了电话。<br>要事说罢，开始短暂的闲聊。我问她，毕业之后打算留在天津吗？不料，得到了否定的答案。不过，即便如此，我还是回应，如果有困难，不管是生活上的还是经济上的，我都可以帮助你。然而，当时的我，可能连自己都还照顾不好。说这话其实是没有十足的底气的，还好她只表达了谢意。实际上，我的潜台词是：留下来吧，让我照顾你。<br>多年之后，再次聊到这里时，坦率地说出了各自的感受：    </p>
+<blockquote>
+<p>妻：我想起来毕业的时候你跟我说经济困难的话可以支持我一下，我那时候只是觉得你人挺好的，也没想过其他，好像最近才明白你的意思。<br>我：那个时候说实话，我的经济挺拮据的。不过那会儿确实是不太想见不到你，毕竟可能从此再也见不到面了。我觉得如果能和你在一起，会是我的荣幸。    </p>
+</blockquote>
+<p>嗯，没错，当时我被送了好人卡，很像现在很多网文描述的那样，这一波操作给满分。   </p>
+<h2 id="四"><a href="#四" class="headerlink" title="四"></a>四</h2><p>从13年毕业到18年，都是我的单身时光。刚开始和父母一起住，16年开始自己住。<br>值得高兴的是，赶在房价大涨之前买了房，还是纯公积金贷款，相对压力小很多。感觉像是躺着赚钱。<br>这一段时间，豆瓣网对我而言，也像躺着赚钱一样逐步丰满。除了看各种书、碟评论外，我还喜欢上了标记。标记自己读过的书、想读的书和在读的书，对于CD唱片也是这样。虽然希望遇到志同道合的朋友，但是又不想草率，总觉得豆瓣算是互联网上的一块净土了。   </p>
+<p><img src="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(5).png" alt="豆瓣截图">  </p>
+<p>到今天，我仍然仅关注了9个成员，被4个成员关注。</p>
+<h2 id="五"><a href="#五" class="headerlink" title="五"></a>五</h2><p>2018年，由于我所在的公司派我去广州，进行为期一周的差旅。我便抽时间和多年未见的她见面聊天。<br>没想到，这一次见面，似乎拉开了我们婚姻的序幕。<br>她让我深深地感受到，除了还是充满广东腔的普通话，除了还是那个外表可爱的女孩外，还让我感受到她的耐心、体贴和舒服。和她说话，总是让人觉得莫名的舒服，而且具有同理心。<br>我们一起去了广州塔，在珠江边散步。她让我看到了她的勇气和毅力，这足以给身边的人树立一个榜样，在思想和行动上已经算是一个巨人了。虽然她说行动上还要再观察，但我相信她不会让我失望的。<br>这次见面不再是简单的好感，而是欣赏和佩服。有些话，我想不到会从她的嘴里说出来。连她自己也感觉到，在我的认识里，她只是简单做一份稳定的工作，然后找个靠谱的男人嫁了就好了的那种。<br>而现在，我感觉到，她已经不再是小女孩，虽然看上去不怎么起眼。她拥有着一刻赤子之心，有自己的坚持。虽然年龄在增长，但是灵魂还是年轻的。这是最让我感到震惊与震撼的地方。<br>我们没有经历谈恋爱，似乎也没有过多的甜蜜，一切事情都是平淡无奇，顺理成章的进行。<br>18年年底，我们终于领证了，成为了受法律保护的夫妻。   </p>
+<p><img src="https://github.com/wh1990xiao2005/site_source/raw/master/photogragh/%E8%AE%A9%E6%88%91%E5%AF%B9%E8%B1%86%E7%93%A3%E6%84%9F%E5%85%B4%E8%B6%A3%E7%9A%84%E4%BA%BA%EF%BC%8C%E6%88%91%E5%92%8C%E5%A5%B9%E7%BB%93%E5%A9%9A%E4%BA%86%20(6).jpg" alt="领证啦">  </p>
+<h2 id="六"><a href="#六" class="headerlink" title="六"></a>六</h2><p>感谢豆瓣，多年来的陪伴。我们的故事未完待续……</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://www.xiaowenhan.com.cn/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/" title="让我对豆瓣感兴趣的人，我和她结婚了" target="_blank" rel="external">http://www.xiaowenhan.com.cn/2019/08/16/让我对豆瓣感兴趣的人，我和她结婚了/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客内容除特殊说明外，均可转载，转载请注明出处。
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="about" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="about" target="_blank"><span class="text-dark">萧文翰</span><small class="ml-1x">资深移动开发架构师</small></a></h3>
+        <div>现就职于广州三星通信技术研究院，主要做代码分析和性能优化；《Flutter入门与应用实战》（暂定书名）作者；CSDN博客专家和认证讲师；8项国内专利发明人；阿里ACE（天津分会）成员；《Android插件化开发指南》 英文版译者。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/08/19/我是如何赚到第一笔兼职收入的/" title="我是如何赚到第一笔兼职收入的"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2019/08/01/津城随手拍合集/" title="津城随手拍合集"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赞赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="wechat,qzone,weibo,linkedin,douban" data-mobile-sites=""></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">支付宝扫码打赏</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码支持，不限金额</p>
+              <p class="text-grey">微信扫码打赏</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://www.zhihu.com/people/wh1990xiao2005/activities" target="_blank" title="Zhihu" ><i class="icon icon-zhihu"></i></a></li>
+        
+        <li><a href="https://juejin.im/user/5af516b96fb9a07ac363839d" target="_blank" title="Juejin" ><i class="icon icon-juejin"></i></a></li>
+        
+        <li><a href="https://github.com/wh1990xiao2005" target="_blank" title="Github" ><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="https://www.douban.com/people/wh1990xiao2005/" target="_blank" title="Douban" ><i class="icon icon-douban"></i></a></li>
+        
+        <li><a href="https://www.cnblogs.com/wenhanxiao/" target="_blank" title="More" ><i class="icon icon-more"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        &copy; 2019 Wenhan Xiao
+        
+        <div class="publishby">
+        	版权所有
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+<script src="/js/plugin.min.js"></script>
+<script src="/js/application.js"></script>
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
